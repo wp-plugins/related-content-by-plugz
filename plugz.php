@@ -2,7 +2,7 @@
 /*
   Plugin Name: Related Content by Plugz
   Plugin Script: plugz.php
-  Plugin URI: http://wordpress.org/plugins/related-content-by-plugz/
+  Plugin URI: http://www.plugz.co
   Description: Get Premium quality traffic with Plugz. Display related posts on your blog. Boost your site with new visitors or earn money with sponsored content. 
   Version: 1.0
   Author: Plugz.co Team
