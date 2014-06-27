@@ -15,7 +15,7 @@ Get Premium quality traffic with Plugz. Display related posts on your blog. Boos
 
 Plugz widget displays content related posts on your blog. We are analyzing your pages continously and promote your articles on thousands of related partner sites in our network.
 
-== Key Features ==
+= Key Features =
 
 - uniq algorythm displays related posts from other WordPress users and from any other content management systems or displays related content from accross your site, depends on your strategy
 - customize thumbnail layout
