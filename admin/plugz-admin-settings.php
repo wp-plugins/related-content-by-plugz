@@ -111,7 +111,7 @@ function plugz_settings_page() {
             $categoriesAdultGay = array();
         }
     }
-
+    
     if (plugz_connected()) {
         $plugzConnected = true;
         if (!empty($plugz['user']) && !empty($plugz['password'])) {
@@ -120,7 +120,14 @@ function plugz_settings_page() {
             if (isset($status['error'])) {
                 $status = array('status' => '400', 'message' => $status['error']);
             } else {
-                $status = array('status' => '200', 'message' => 'Congratulation, you are connected to the Plugz API.');
+                $webmaster = plugz_request(array('action' => 'getWebmaster'));
+                $isActivated = ($webmaster['status'] == 'A' ? true : false);
+                
+                if ($isActivated) {
+                    $status = array('status' => '200', 'message' => 'Congratulation, you are connected to the Plugz API.');
+                } else {
+                    $status = array('status' => '400', 'message' => 'Please check your email. We have sent you an activation e-mail with the instructions about how to continue.');
+                }
 
                 if (isset($_GET['settings-updated']) && $_GET['settings-updated']) {
                     $website = plugz_request(array('action' => 'getWebsite'));
