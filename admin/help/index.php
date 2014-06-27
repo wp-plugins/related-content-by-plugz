@@ -27,7 +27,7 @@
                     <h3 class="title">About</h3>
 
                     <div class="inside">
-                        <p>Related Content by Plugz version 1.0</p>
+                        <p>Related Content by Plugz version 1.0.1</p>
                         <p>Get Premium quality traffic with Plugz. Display related posts on your blog. Boost your site with new visitors or earn money with sponsored content.</p>
                         <p>Plugz widget displays content related posts on your blog. We are analyzing your pages continously and promote your articles on thousands of related partner sites in our network.</p>
                     </div>
