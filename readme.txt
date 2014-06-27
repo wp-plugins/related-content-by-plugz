@@ -37,7 +37,7 @@ C.Earn premium revenue rates while displaying contextual ads and buy traffic fro
 
 System is free to use and accepts all kind of blogs. It runs on our servers, not cause additional load on your system.
 
-Find more at Plugz.co
+Find more at [Plugz.co](https://www.plugz.co/ "Plugz - Related Content Recommendation Platform")
 
 == Installation ==
 
