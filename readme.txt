@@ -55,13 +55,50 @@ Find more at Plugz.co
 
 == Frequently Asked Questions ==
 
-= Is Plugz free? =
+= What is Plugz? =
 
-Yes, 100%.
+Plugz is a related content recommendation system for publishers and great contextual advertising tool for marketers.
 
-= Is Plugz awesome? =
+= How does it work? =
 
-Incredibly
+All registered members have to place a widget on their site. Depends on your settings, related content will be available on the widget.
+
+= What's the difference between related content recommendation system and regular traffic exchanger? =
+
+The quality. Realted aticles in the widget generate more clicks and satisfied visitors. Satisfied visitors generate more pageview, more time on site, less bounce rate!
+
+= How much does it cost? =
+
+This service is completely free.
+
+= What kind of strategies can i follow? =
+
+Here are few:
+You have a blog, you want to keep your
+
+= How much money can I earn and how? =
+
+Publishers earn premium revenue rates while displaying sponsored content. The price depends on various parameters. All you have to do is: set Monetize traffic 'Yes' at widget settings.
+
+= How can I buy traffic? =
+
+Go to advertiser area. Add funds to your account, set a campaign with filters if you need, then add sponsored plugs to the campaign. After short review, we accept your sposored plugs, and they goes live.
+
+= Can I set who I want to trade with? =
+
+Yes. When creating your widget you describe with category and hashtags what kind of plugs will be availabe on the widget.
+
+= Is the widget fully customizable? =
+
+Yes. Your widget can be completely matches the look and feel of your site. You can play with many features at image settings, text settings, niche settings
+
+= What is your payment methods? =
+
+You can receive payments at this moment by Paypal, Paxum or Wire.
+
+= How can I contact you if I have questions or any problems? =
+
+Please use our contact form on plugz.co after login. 
 
 == Changelog ==
 
