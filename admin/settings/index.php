@@ -108,6 +108,7 @@
                                     <li><a target="plugz" href="admin.php?page=plugz/settings&open=stat-traffic&noheader=true">Traffic</a></li>
                                     <li><a target="plugz" href="admin.php?page=plugz/settings&open=stat-income&noheader=true">Income</a></li>
                                     <li><a target="plugz" href="admin.php?page=plugz/settings&open=edit-profile&noheader=true">Edit Profile</a></li>
+                                    <li><a target="plugz" href="admin.php?page=plugz/settings&open=support&noheader=true">Support</a></li>
                                 </ul>
                             </div><!-- .inside -->
                         </div><!-- #plugz_reindex -->
@@ -159,7 +160,7 @@
                             <?php settings_fields('plugz-settings'); ?>
                             <?php do_settings_fields('plugz-settings', ''); ?>
                             <div class="inside" style="margin-left: 2em">
-                                <div>If you have already signed up to <a target="_blank" href="//www.plugz.co/">www.plugz.co</a>, then enter your credentials here.</div>
+                                <div>If you have already signed up to <a target="_blank" href="https://www.plugz.co/">www.plugz.co</a>, then enter your credentials here.</div>
 
                                 <table class="form-table">
                                     <tbody>

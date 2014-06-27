@@ -36,6 +36,7 @@ function plugz_settings_page() {
         'stat-income' => '/publisher/stat/sold-traffic.plug',
         'edit-profile' => '/publisher/settings/edit-profile.plug',
         'edit-website' => '/publisher/website/edit.plug',
+        'support' => '/publisher/support.plug',
     );
 
     if (isset($_GET['open'])) {
