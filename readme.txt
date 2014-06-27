@@ -41,9 +41,9 @@ Find more at [Plugz.co](https://www.plugz.co/ "Plugz - Related Content Recommend
 
 == Installation ==
 
-1. Upload the `plugz` folder to the `/wp-content/plugins/` directory
+1. Upload the `related-content-by-plugz` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Go to the Plugz settings page in the admin menu, and enter your credentials to activate API
+3. Go to the Plugz settings page in the admin menu, and enter your credentials to register/login and activate API
 
 == Upgrade Notice ==
 
