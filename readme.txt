@@ -98,7 +98,7 @@ You can receive payments at this moment by Paypal, Paxum or Wire.
 
 = How can I contact you if I have questions or any problems? =
 
-Please use our contact form on plugz.co after login. 
+Please use our [contact form](https://www.plugz.co/publisher/support.plug "Plugz - Support"). 
 
 == Changelog ==
 
