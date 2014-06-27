@@ -31,9 +31,9 @@ Plugz widget displays content related posts on your blog. We are analyzing your 
 
 All features are optional! Choose your ABC strategy, set your widget by that! 
 
-- A. Keep your visitors on your pages, increase your pageview
-- B. Drive new visitors to your blog from the entire network via other related pages
-- C. Earn premium revenue rates while displaying contextual ads and buy traffic from your revenue
+- *A.* Keep your visitors on your pages, increase your pageview
+- *B.* Drive new visitors to your blog from the entire network via other related pages
+- *C.* Earn premium revenue rates while displaying contextual ads and buy traffic from your revenue
 
 System is free to use and accepts all kind of blogs. It runs on our servers, not cause additional load on your system.
 
