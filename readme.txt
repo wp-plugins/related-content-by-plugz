@@ -102,9 +102,6 @@ Please use our [contact form](https://www.plugz.co/publisher/support.plug "Plugz
 
 == Changelog ==
 
-= 1.0.1 =
-* Fixed API connection bug
-
 = 1.0 =
 * First release
 
