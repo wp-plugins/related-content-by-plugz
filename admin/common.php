@@ -137,7 +137,7 @@ function plugz_reindex() {
                 'height' => $meta[1],
                 'categories' => implode(',', $plugz_post['categories']),
                 'tags' => implode(',', $plug['tags']),
-                'posttype' => (isset($plugz['website_type']) && $plugz['website_type'] == 'M' ? '' : 'TUBE'),
+                'posttype' => (isset($plugz['website_type']) && $plugz['website_type'] == 'M' ? 'TUBE' : 'GALLERY'),
                 'models' => '',
                 'action' => 'REINDEX'
             );
