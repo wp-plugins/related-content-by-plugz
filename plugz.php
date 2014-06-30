@@ -269,7 +269,7 @@ function plugz_post($post_id, $post) {
                 'height' => $meta[1],
                 'categories' => $plug['categories'],
                 'tags' => implode(',', $plug['tags']),
-                'posttype' => (isset($plugz['website_type']) && $plugz['website_type'] == 'M' ? '' : 'TUBE'),
+                'posttype' => (isset($plugz['website_type']) && $plugz['website_type'] == 'M' ? 'TUBE' : 'GALLERY'),
                 'models' => '',
                 'action' => 'UPDATE'
             );
