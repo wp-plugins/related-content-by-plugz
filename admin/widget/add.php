@@ -1434,6 +1434,9 @@ color:#039;
                 showPreview($($website).val());
             });
 
+            $(document).on("change", "#customcss", function() {
+                showPreview( $("#website").val());
+            });
 
             $("#gay").select2({
                 width: "90%",
