@@ -10,6 +10,7 @@
   License: GPL2
 
   === RELEASE NOTES ===
+  2014-06-27 - v1.0.1 - bugfixes
   2014-06-22 - v1.0 - first version
  */
 define('PLUGZ_ADMIN_SETTINGS_PAGE', 'plugz');
@@ -60,7 +61,7 @@ if (is_admin()) {
     require_once(PLUGZ_ADMIN_DIR . '/plugz-admin-help.php');
     add_action('admin_menu', 'plugz_menu');
     add_action('admin_init', 'plugz_settings');
-    register_activation_hook('plugz/plugz.php', 'plugz_activate');
+    register_activation_hook('related-content-by-plugz/plugz.php', 'plugz_activate');
     $plugin = plugin_basename(__FILE__);
     add_filter("plugin_action_links_$plugin", 'plugz_settings_link');
     add_action('post_submitbox_misc_actions', 'plugz_publish_box');
@@ -190,7 +191,7 @@ function plugz_delete_post($post_id) {
         'categories' => '',
         'tags' => '',
         'posttype' => 'GALLERY',
-        'models' => '',
+        'models' => null,
         'action' => 'DELETE'
     );
     $result = plugz_request(array('action' => 'updatePost', 'posts' => http_build_query($data)));
@@ -268,8 +269,8 @@ function plugz_post($post_id, $post) {
                 'height' => $meta[1],
                 'categories' => $plug['categories'],
                 'tags' => implode(',', $plug['tags']),
-                'posttype' => (isset($plugz['website_type']) && $plugz['website_type'] == 'M' ? '' : 'TUBE'),
-                'models' => '',
+                'posttype' => (isset($plugz['website_type']) && $plugz['website_type'] == 'M' ? 'TUBE' : 'GALLERY'),
+                'models' => null,
                 'action' => 'UPDATE'
             );
         }
@@ -537,7 +538,7 @@ class Plugz_Widget extends WP_Widget {
         ?>
     <div class="misc-pub-section plugz">
         <input type="hidden" name="_plugz_post" value="0" />
-        <span id="plugz" style="background-image: url('<?= plugins_url('/logo16.png', 'plugz/plugz.php'); ?>'); background-repeat:no-repeat; padding-left:20px;">
+        <span id="plugz" style="background-image: url('<?= plugins_url('/logo16.png', 'related-content-by-plugz/plugz.php'); ?>'); background-repeat:no-repeat; padding-left:20px;">
             <?php
             $checked = (1) ? ' checked="checked"' : ''; //(isset($plugz['autopost'])) && $plugz['autopost'] == 1
             if (isset($plugz_post['autopost']) && $plugz_post['autopost'] == '0') {
@@ -551,7 +552,7 @@ class Plugz_Widget extends WP_Widget {
 
 function plugz_post_header_columns($columns) {
     if (!isset($columns['_plugz_posted'])) {
-        $columns['_plugz_posted'] = '<img src="' . plugins_url('/images/logo16.png', 'plugz/plugz.php') . '" title="Posted to Plugz" alt="Plugz" />';
+        $columns['_plugz_posted'] = '<img src="' . plugins_url('/images/logo16.png', 'related-content-by-plugz/plugz.php') . '" title="Posted to Plugz" alt="Plugz" />';
     }
     return $columns;
 }
@@ -561,9 +562,9 @@ function plugz_post_data_row($column_name, $post_id) {
         case '_plugz_posted':
             $plugz_post = get_post_meta($post_id, '_plugz', TRUE);
             if (isset($plugz_post['posted']) && $plugz_post['posted'] == '1') {
-                echo '<img src="' . plugins_url('/images/tick16.png', 'plugz/plugz.php') . '" title="Posted to Plugz" alt="Yes" />';
+                echo '<img src="' . plugins_url('/images/tick16.png', 'related-content-by-plugz/plugz.php') . '" title="Posted to Plugz" alt="Yes" />';
             } else {
-                echo '<img src="' . plugins_url('/images/delete16.png', 'plugz/plugz.php') . '" title="Not yet posted to Plugz" alt="No" />';
+                echo '<img src="' . plugins_url('/images/delete16.png', 'related-content-by-plugz/plugz.php') . '" title="Not yet posted to Plugz" alt="No" />';
             }
             break;
         default:
