@@ -1195,6 +1195,7 @@ color:#039;
 
             $('#widgetTemplates .entrylist li').css('cursor', 'pointer').css('cursor', 'hand').click(function(event) {
                 event.preventDefault();
+                $("#customcss").empty();
                 $("#widget_form").unserializeForm(defaultForm);
                 $(".widgetbox").show();
                 $("#widget_form .row, #widget_form .row :input").not('#widgetbox_niche_settings .row').not('#widgetbox_niche_settings .row :input').show();
