@@ -14,9 +14,8 @@
 <link rel="stylesheet" href="<?php echo PLUGZ_CSS_DIR ?>/main.css" type="text/css">
 <link rel="stylesheet" href="<?php echo PLUGZ_CSS_DIR ?>/widgets.css" type="text/css">
 <link rel="stylesheet" href="<?php echo PLUGZ_CSS_DIR ?>/select2.css" type="text/css">
+<link rel="stylesheet" href="<?php echo PLUGZ_JS_DIR ?>/widearea/widearea.min.css" type="text/css">
 
-<script type="text/javascript" src="<?php echo PLUGZ_JS_DIR ?>/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="<?php echo PLUGZ_JS_DIR ?>/jquery-migrate-1.1.1.min.js"></script>
 <script type="text/javascript" src="<?php echo PLUGZ_JS_DIR ?>/jquery-ui-1.10.3.min.js"></script>
 <script type="text/javascript" src="<?php echo PLUGZ_JS_DIR ?>/modernizr.min.js"></script>
 <script type="text/javascript" src="<?php echo PLUGZ_JS_DIR ?>/bootstrap.min.js"></script>

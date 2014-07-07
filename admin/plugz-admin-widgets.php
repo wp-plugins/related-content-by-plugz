@@ -23,10 +23,42 @@ function plugz_widgets_page() {
             die(json_encode(array(array('id' => $_GET['q'], 'text' => $_GET['q']))));
         } elseif ($_POST['action'] == 'get_preview') {
             die('');
-        } elseif ($_POST['action'] == 'save') {
+        } elseif ($_POST['action'] == 'save' && isset($_GET['create'])) {
             $result = plugz_request(array('action' => 'saveWidget', 'data' => http_build_query(array('post' => $_POST))));
             header("Content-type: application/json");
             die(json_encode($result));
+        } elseif (isset($_POST['widget_placement'])) {
+            header('Content-Type: application/json');
+            
+            $widgetPlacements = get_option('plugz-widget-placements', array());
+            
+            foreach ($_POST['widget_placement'] as $widgetId => $widgetPlacement) {
+                $placement = array(
+                    'placement' => $widgetPlacement
+                );
+                
+                if (isset($_POST['widget_post_id'][$widgetId])) {
+                    $placement['post_id'] = $_POST['widget_post_id'][$widgetId];
+                }
+                
+                if (isset($_POST['widget_page_id'][$widgetId])) {
+                    $placement['page_id'] = $_POST['widget_page_id'][$widgetId];
+                }
+                
+                if (isset($_POST['widget_placement_paragraph'][$widgetId])) {
+                    $placement['paragraph'] = $_POST['widget_placement_paragraph'][$widgetId];
+                }
+
+                if ($widgetId == 0) {
+                    $widgetId = $_POST['widget_id'];
+                }
+                
+                $widgetPlacements[$widgetId] = $placement;
+            }
+            
+            update_option('plugz-widget-placements', $widgetPlacements);
+            
+            die(json_encode($widgetPlacements));
         } else {
             die();
         }
@@ -51,6 +83,8 @@ function plugz_widgets_page() {
         
         exit;
     } else {
+        $widgetPlacements = get_option('plugz-widget-placements', array());
+        
         include_once(dirname(__FILE__) . '/widget/index.php');
     }
 }

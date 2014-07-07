@@ -1,3 +1,5 @@
+var $ = jQuery;
+
 function detectab()
 {
     //create a iframe. Append the iframe to the body. And then after 100ms check if their offsetHeight, display or visibility is set such a way that user cannot see them.
@@ -51,7 +53,6 @@ function showPreview(wid) {
         }
     }).done(function(result) {
         createEmbedCode(wid);
-        $(".widgetbox").show();
         $(".span12").removeClass('span12').addClass('span8');
         $(".span4").show();
         $('#preview').show();
@@ -116,11 +117,14 @@ function createEmbedCode(wid) {
     var opc = document.getElementById("opacolor").value;
     var opa = document.getElementById("opacity").value;
     var sitelink = document.getElementById("sitelink").value;
-
+    var customcss = $("#customcss").val();
+    customcss = customcss.replace(/#/g, "|hash|");
+    customcss = customcss.replace(/%/g, "|percent|");
+    customcss = customcss.replace(/\n/g, "");
     var nh = '0';
     var fid = wid;
 
-    var params = "opacolor_r=" + $("#opacolor_r").val() + ",cff=" + $("#cff").val() + ",sitelink=" + $("#sitelink").val() + ",opacolor_g=" + $("#opacolor_g").val() + ",opacolor_b=" + $("#opacolor_b").val() + ",opacolor_a=" + $("#opacolor_a").val() + ",opacolor=" + opc + ",opacity=" + opa + ",titlelength=" + tl + ",ca=" + ca + ",c=" + c + ",nh=" + nh + ",ai=0" + ",id=" + id + ",iyn=" + iyn + ",db=" + db
+    var params = "customcss=" + encodeURIComponent($.trim(customcss)) + ",opacolor_r=" + $("#opacolor_r").val() + ",cff=" + $("#cff").val() + ",sitelink=" + $("#sitelink").val() + ",opacolor_g=" + $("#opacolor_g").val() + ",opacolor_b=" + $("#opacolor_b").val() + ",opacolor_a=" + $("#opacolor_a").val() + ",opacolor=" + opc + ",opacity=" + opa + ",titlelength=" + tl + ",ca=" + ca + ",c=" + c + ",nh=" + nh + ",ai=0" + ",id=" + id + ",iyn=" + iyn + ",db=" + db
             + ",htc=" + htc + ",ibch=" + ibch + ",it=" + it + ",wt=" + wt + ",iw=" + iw + ",pd=" + pd
             + ",br=" + br + ",bty=" + bty + ",brc=" + brc + ",st=" + st + ",tp=" + tp + ",ta=" + ta + ",dec=" + dec
             + ",ff=" + ff + ",fsz=" + fsz + ",fs=" + fs + ",fw=" + fw + ",fc=" + fc + ",ch=" + ch + ",adv=" + sru + ",lp=" + sete + ",str=" + str + ",show_only_my_trades=" + sntw;
@@ -147,7 +151,6 @@ function createEmbedCode(wid) {
         console.log(e);
     }
 
-    // whereInstance.val("<" + "script type=\"text/javascript\" src=\"http://plug.plugerr.com/" + posttype + "?fid=" + fid + "&a=" + engine + "&p=" + params + "\"><" + "/script>");
     var frame = document.getElementById("iframe");
     frame.src = pluginPath + "/preview.php?fid=" + fid + "&p=" + params + "&a=" + engineDomain;
 }

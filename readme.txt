@@ -4,7 +4,7 @@ Tags: images, plugs, plugz, plugin, popular posts, post, posts, content, page, p
 ad network, ads, advertising, widget, contextual, nrelate, outbrain, yarpp, taboola, money
 Requires at least: 1.8
 Tested up to: 3.9.1
-Stable tag: 1.0.1
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Contributors: Plugz Team
@@ -17,7 +17,7 @@ Plugz widget displays content related posts on your blog. We are analyzing your 
 
 = Key Features =
 
-- uniq algorythm displays related posts from other WordPress users and from any other content management systems or displays related content from accross your site, depends on your strategy
+- unique algorithm displays related posts from other WordPress users and from any other content management systems or displays related content from across your site, depends on your strategy
 - customize thumbnail layout
 - monetize your traffic with high quality sponsored content
 - detailed traffic report with geo stat and return ratio
@@ -101,6 +101,9 @@ You can receive payments at this moment by Paypal, Paxum or Wire.
 Please use our [contact form](https://www.plugz.co/publisher/support.plug "Plugz - Support"). 
 
 == Changelog ==
+
+= 1.1 =
+* New features: shortcodes, new templates, custom css and easy widget placement on pages and posts
 
 = 1.0.1 =
 * Fixed API connection bug

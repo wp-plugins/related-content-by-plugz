@@ -18,6 +18,7 @@ function plugz_request($params) {
     }
 
     $plugz = get_option('plugz-settings');
+
     $params['email'] = $plugz['user'];
     $params['password'] = $plugz['password'];
     $params['apiKey'] = get_option('plugz-api-key');

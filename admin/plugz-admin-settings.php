@@ -41,7 +41,7 @@ function plugz_settings_page() {
 
     if (isset($_GET['open'])) {
         if (array_key_exists($_GET['open'], $validPlugzPages)) {
-            wp_redirect((APPLICATION_ENV == 'development' ? 'http://' : 'https://').'www.plugz.co/sign-in.plug?redirect=' . urlencode($validPlugzPages[$_GET['open']]) . '&sig=' . $apiKey, 301);
+            wp_redirect((APPLICATION_ENV == 'development' ? 'http://www.plugz' : 'https://www.plugz.co').'/sign-in.plug?redirect=' . urlencode($validPlugzPages[$_GET['open']]) . '&sig=' . $apiKey, 301);
         } else {
             wp_redirect('admin.php?page=plugz/settings', 301);
         }
@@ -160,15 +160,14 @@ function plugz_settings_page() {
                     $frid = plugz_request($params);
                     $webmaster = plugz_request(array('action' => 'getWebmaster'));
                     $apiKey = $webmaster['wptoken'];
+                    update_option('plugz-api-key', $webmaster['wptoken']);
+                    update_option('plugz-frid', (int) $frid[0]);
 
                     if (!$plugzHasBeenIndexed) {
                         plugz_reindex();
                         update_option('plugz-has-been-indexed', 1);
                     }
 
-                    update_option('plugz-api-key', $webmaster['wptoken']);
-                    update_option('plugz-frid', (int) $frid[0]);
-                    
                     $website = plugz_request(array('action' => 'getWebsite'));
                     $categories = explode(',', $website['tags']);
                     

@@ -27,7 +27,7 @@
                     <h3 class="title">About</h3>
 
                     <div class="inside">
-                        <p>Related Content by Plugz version 1.0.1</p>
+                        <p>Related Content by Plugz version <?php echo $plugin_version ?></p>
                         <p>Get Premium quality traffic with Plugz. Display related posts on your blog. Boost your site with new visitors or earn money with sponsored content.</p>
                         <p>Plugz widget displays content related posts on your blog. We are analyzing your pages continously and promote your articles on thousands of related partner sites in our network.</p>
                     </div>
@@ -37,7 +37,7 @@
 
                     <div class="inside">
                         <ul>
-                        <li>Unique algorythm displays related posts from other WordPress users and from any other content management systems or displays related content from accross your site, depends on your strategy</li>
+                        <li>Unique algorithm displays related posts from other WordPress users and from any other content management systems or displays related content from across your site, depends on your strategy</li>
                         <li>customize thumbnail layout</li>
                         <li>monetize your traffic with high quality sponsored content</li>
                         <li>detailed traffic report with geo stat and return ratio</li>
