@@ -190,7 +190,7 @@ function plugz_delete_post($post_id) {
         'categories' => '',
         'tags' => '',
         'posttype' => 'GALLERY',
-        'models' => '',
+        'models' => null,
         'action' => 'DELETE'
     );
     $result = plugz_request(array('action' => 'updatePost', 'posts' => http_build_query($data)));
@@ -269,7 +269,7 @@ function plugz_post($post_id, $post) {
                 'categories' => $plug['categories'],
                 'tags' => implode(',', $plug['tags']),
                 'posttype' => (isset($plugz['website_type']) && $plugz['website_type'] == 'M' ? 'TUBE' : 'GALLERY'),
-                'models' => '',
+                'models' => null,
                 'action' => 'UPDATE'
             );
         }
