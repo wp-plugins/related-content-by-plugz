@@ -54,7 +54,6 @@ function plugz_get_image_meta($url) {
 
 function plugz_connected() {
     $result = plugz_request(array('action' => 'hello'));
-    $frid = get_option('plugz-frid');
     
     if (isset($result[0]) && $result[0] == 'success') {
         return true;
