@@ -56,7 +56,7 @@ function plugz_connected() {
     $result = plugz_request(array('action' => 'hello'));
     $frid = get_option('plugz-frid');
     
-    if (isset($result[0]) && $result[0] == 'success' && !empty($frid)) {
+    if (isset($result[0]) && $result[0] == 'success') {
         return true;
     } else {
         return false;
