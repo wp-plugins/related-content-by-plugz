@@ -650,8 +650,15 @@ class Plugz_Widget extends WP_Widget {
         if ($post->post_type == 'page') {
             return;
         }
+        
+        if (empty($frid)) { 
+            return;
+        }
+        
         $plugz = get_option('plugz-settings');
         $plugz_post = get_post_meta($post->ID, '_plugz', TRUE);
+        $frid = get_option('plugz-frid');
+        
         ?>
     <div class="misc-pub-section plugz">
         <input type="hidden" name="_plugz_post" value="0" />
@@ -664,7 +671,7 @@ class Plugz_Widget extends WP_Widget {
             ?>
             Post to Plugz: <b><input type="checkbox" name="_plugz_post"<?= $checked; ?> value="1" /></b></span>
     </div>
-    <?php
+    <?php 
 }
 
 function plugz_post_header_columns($columns) {
