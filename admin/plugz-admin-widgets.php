@@ -9,13 +9,15 @@
  * @subpackage Functions
  */
 function plugz_widgets_page() {
-    if (!plugz_connected()) {
+    $frid = get_option('plugz-frid');
+    
+    if (!plugz_connected() || empty($frid)) {
         $plugzConnected = false;
         echo '<div id="message" class="error fade"><p><strong>Cannot connect to Plugz API, please try again later.</strong></p></div>';
     } else {
         $plugzConnected = true;
     }
-        
+
     $apiKey = get_option('plugz-api-key', '');
 
     if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
