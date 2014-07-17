@@ -154,6 +154,6 @@ function plugz_reindex() {
             return false;
         }
     } else {
-        return false;
+        return true;
     }
 }
