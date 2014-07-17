@@ -25,6 +25,17 @@ function plugz_settings() {
 function plugz_settings_page() {
     $plugzConnected = false;
     $missingCredentials = false;
+
+    if (isset($_GET['logout']) && $_GET['logout'] == 1) {
+        delete_option('plugz-api-key');
+        delete_option('plugz-frid');
+        delete_option('plugz-has-been-indexed');
+        delete_option('plugz-settings');
+
+        header('location: /wp-admin/admin.php?page=plugz/settings');
+        die();
+    }
+
     $apiKey = get_option('plugz-api-key', '');
 
     $validPlugzPages = array(
@@ -41,7 +52,7 @@ function plugz_settings_page() {
 
     if (isset($_GET['open'])) {
         if (array_key_exists($_GET['open'], $validPlugzPages)) {
-            wp_redirect((APPLICATION_ENV == 'development' ? 'http://www.plugz' : 'https://www.plugz.co').'/sign-in.plug?redirect=' . urlencode($validPlugzPages[$_GET['open']]) . '&sig=' . $apiKey, 301);
+            wp_redirect((APPLICATION_ENV == 'development' ? 'http://www.plugz' : 'https://www.plugz.co') . '/sign-in.plug?redirect=' . urlencode($validPlugzPages[$_GET['open']]) . '&sig=' . $apiKey, 301);
         } else {
             wp_redirect('admin.php?page=plugz/settings', 301);
         }
@@ -111,7 +122,7 @@ function plugz_settings_page() {
             $categoriesAdultGay = array();
         }
     }
-    
+
     if (plugz_connected()) {
         $plugzConnected = true;
         if (!empty($plugz['user']) && !empty($plugz['password'])) {
@@ -121,86 +132,100 @@ function plugz_settings_page() {
                 $status = array('status' => '400', 'message' => $status['error']);
             } else {
                 $webmaster = plugz_request(array('action' => 'getWebmaster'));
-                $isActivated = ($webmaster['status'] == 'A' ? true : false);
-                
-                if ($isActivated) {
-                    $status = array('status' => '200', 'message' => 'Congratulation, you are connected to the Plugz API.');
-                } else {
-                    $status = array('status' => '400', 'message' => 'Please check your email. We have sent you an activation e-mail with the instructions about how to continue.');
-                }
 
-                if (isset($_GET['settings-updated']) && $_GET['settings-updated']) {
-                    $website = plugz_request(array('action' => 'getWebsite'));
+                if (isset($webmaster['status'])) {
+                    $isActivated = ($webmaster['status'] == 'A' ? true : false);
 
-                    $categoriesMainstreamTmp = $categoriesMainstream;
+                    if ($isActivated) {
+                        $status = array('status' => '200', 'message' => 'Congratulation, you are connected to the Plugz API.');
+                    } else {
+                        $status = array('status' => '400', 'message' => 'Please check your email. We have sent you an activation e-mail with the instructions about how to continue.');
+                    }
 
-                    foreach ($categoriesMainstreamTmp as $categoriesMainstreamTmpKey => $categoriesMainstreamTmpVal) {
-                        if ($categoriesMainstreamTmpVal == $plugz['main_category_mainstream']) {
-                            unset($categoriesMainstreamTmp[$categoriesMainstreamTmpKey]);
+                    if (isset($_GET['settings-updated']) && $_GET['settings-updated']) {
+                        $isValidWebsite = plugz_request(array('action' => 'validateWebsite'));
+                        
+                        if (!empty($isValidWebsite[0]) && !is_bool($isValidWebsite[0])) {
+                            update_option('plugz-frid', (int) $isValidWebsite[0]);
+                            $website = plugz_request(array('action' => 'getWebsite'));
+                        } elseif (isset($isValidWebsite[0]) && $isValidWebsite[0] === false) {
+                            $status = array('status' => '400', 'message' => 'This website belongs to another user.');
                         }
+                        
+                        if (isset($isValidWebsite[0]) && $isValidWebsite[0] !== false) {
+                            $categoriesMainstreamTmp = $categoriesMainstream;
+
+                            foreach ($categoriesMainstreamTmp as $categoriesMainstreamTmpKey => $categoriesMainstreamTmpVal) {
+                                if ($categoriesMainstreamTmpVal == $plugz['main_category_mainstream']) {
+                                    unset($categoriesMainstreamTmp[$categoriesMainstreamTmpKey]);
+                                }
+                            }
+
+                            $params = array(
+                                'action' => 'updateWebsite',
+                                'rating' => (isset($website['isadult']) ? ($website['isadult'] ? 'nsfw' : 'mainstream') : ($plugz['rating'] == 'nsfw' ? 'nsfw' : 'mainstream')),
+                                'sexual_orientation' => $plugz['sexual_orientation'],
+                                'siteurl' => PLUGZ_SITE_URL,
+                                'name' => get_bloginfo('name'),
+                                'sitetype' => @$plugz['site_type'] == 'M' ? 'M' : 'G',
+                                'contenttype' => $plugz['content_type'],
+                                'siterssurl' => network_site_url('/'),
+                                'tags' => '',
+                                'nonadult_tags' => '',
+                                'tags_gay' => '',
+                                'main_category_adult' => $plugz['rating'] == 'nsfw' ? $plugz['main_category_adult_straight'] : '',
+                                'main_category_adult_gay' => $plugz['rating'] == 'nsfw' ? $plugz['main_category_adult_gay'] : '',
+                                'main_category_nonadult' => $plugz['rating'] == 'mainstream' ? $plugz['main_category_mainstream'] . ',' . implode(',', $categoriesMainstreamTmp) : '',
+                            );
+
+                            $frid = plugz_request($params);
+                            $webmaster = plugz_request(array('action' => 'getWebmaster'));
+                            $apiKey = $webmaster['wptoken'];
+                            update_option('plugz-api-key', $webmaster['wptoken']);
+                            update_option('plugz-frid', (int) $frid[0]);
+
+                            if (!$plugzHasBeenIndexed) {
+                                plugz_reindex();
+                                update_option('plugz-has-been-indexed', 1);
+                            }
+
+                            $website = plugz_request(array('action' => 'getWebsite'));
+                            $categories = explode(',', $website['tags']);
+
+                            update_option('plugz-settings', array(
+                                'user' => $plugz['user'],
+                                'password' => $plugz['password'],
+                                'sexual_orientation' => (isset($website['is_straight']) && !$website['is_straight'] ? 'gay' : 'straight'),
+                                'website_type' => @$plugz['tradetype'],
+                                'content_type' => @$website['category'],
+                                'main_category_mainstream' => (!$website['isadult'] ? $categories[0] : ''),
+                                'main_category_adult_straight' => ($website['isadult'] && !empty($website['is_straight']) ? $categories[0] : ''),
+                                'main_category_adult_gay' => ($website['isadult'] && empty($website['is_straight']) ? $categories[0] : ''),
+                                'rating' => ($website['isadult'] ? 'nsfw' : 'mainstream')
+                                    )
+                            );
+                            $plugz = get_option('plugz-settings');
+                        }
+                    } else {
+                        $website = plugz_request(array('action' => 'getWebsite'));
+                        $categories = explode(',', $website['tags']);
+
+                        update_option('plugz-settings', array(
+                            'user' => $plugz['user'],
+                            'password' => $plugz['password'],
+                            'sexual_orientation' => (isset($website['is_straight']) && !$website['is_straight'] ? 'gay' : 'straight'),
+                            'website_type' => @$plugz['tradetype'],
+                            'content_type' => $website['category'],
+                            'main_category_mainstream' => (!$website['isadult'] ? $categories[0] : ''),
+                            'main_category_adult_straight' => ($website['isadult'] && !empty($website['is_straight']) ? $categories[0] : ''),
+                            'main_category_adult_gay' => ($website['isadult'] && empty($website['is_straight']) ? $categories[0] : ''),
+                            'rating' => ($website['isadult'] ? 'nsfw' : 'mainstream')
+                                )
+                        );
+                        $plugz = get_option('plugz-settings');
                     }
-                    
-                    $params = array(
-                        'action' => 'updateWebsite',
-                        'rating' => (isset($website['rating']) ? $website['rating'] : ($plugz['rating'] == 'nsfw' ? 'nsfw' : 'mainstream')),
-                        'sexual_orientation' => $plugz['sexual_orientation'],
-                        'siteurl' => PLUGZ_SITE_URL,
-                        'name' => get_bloginfo('name'),
-                        'sitetype' => $plugz['site_type'] == 'M' ? 'M' : 'G',
-                        'contenttype' => $plugz['content_type'],
-                        'siterssurl' => network_site_url('/'),
-                        'tags' => '',
-                        'nonadult_tags' => '',
-                        'tags_gay' => '',
-                        'main_category_adult' => $plugz['rating'] == 'nsfw' ? $plugz['main_category_adult_straight'] : '',
-                        'main_category_adult_gay' => $plugz['rating'] == 'nsfw' ? $plugz['main_category_adult_gay'] : '',
-                        'main_category_nonadult' => $plugz['rating'] == 'mainstream' ? $plugz['main_category_mainstream'].','.implode(',', $categoriesMainstreamTmp) : '',
-                    );
-
-                    $frid = plugz_request($params);
-                    $webmaster = plugz_request(array('action' => 'getWebmaster'));
-                    $apiKey = $webmaster['wptoken'];
-                    update_option('plugz-api-key', $webmaster['wptoken']);
-                    update_option('plugz-frid', (int) $frid[0]);
-
-                    if (!$plugzHasBeenIndexed) {
-                        plugz_reindex();
-                        update_option('plugz-has-been-indexed', 1);
-                    }
-
-                    $website = plugz_request(array('action' => 'getWebsite'));
-                    $categories = explode(',', $website['tags']);
-                    
-                    update_option('plugz-settings', array (
-                        'user' => $plugz['user'], 
-                        'password' => $plugz['password'], 
-                        'sexual_orientation' => (isset($website['is_straight']) && !$website['is_straight'] ? 'gay' : 'straight'), 
-                        'website_type' => $plugz['tradetype'], 
-                        'content_type' => $website['category'], 
-                        'main_category_mainstream' => (!$website['isadult'] ? $categories[0] : ''), 
-                        'main_category_adult_straight' => ($website['isadult'] && !empty($website['is_straight']) ? $categories[0] : ''), 
-                        'main_category_adult_gay' => ($website['isadult'] && empty($website['is_straight']) ? $categories[0] : ''), 
-                        'rating' => ($website['isadult'] ? 'nsfw' : 'mainstream')
-                        )
-                    );
-                    $plugz = get_option('plugz-settings');
                 } else {
-                    $website = plugz_request(array('action' => 'getWebsite'));
-                    $categories = explode(',', $website['tags']);
-                    
-                    update_option('plugz-settings', array (
-                        'user' => $plugz['user'], 
-                        'password' => $plugz['password'], 
-                        'sexual_orientation' => (isset($website['is_straight']) && !$website['is_straight'] ? 'gay' : 'straight'), 
-                        'website_type' => $plugz['tradetype'], 
-                        'content_type' => $website['category'], 
-                        'main_category_mainstream' => (!$website['isadult'] ? $categories[0] : ''), 
-                        'main_category_adult_straight' => ($website['isadult'] && !empty($website['is_straight']) ? $categories[0] : ''), 
-                        'main_category_adult_gay' => ($website['isadult'] && empty($website['is_straight']) ? $categories[0] : ''), 
-                        'rating' => ($website['isadult'] ? 'nsfw' : 'mainstream')
-                        )
-                    );
-                    $plugz = get_option('plugz-settings');
+                    $status = array('status' => '400', 'message' => $webmaster[0]);
                 }
             }
         } else {

@@ -166,7 +166,7 @@
                                     <tbody>
                                         <tr valign="top">
                                             <th scope="row"><label for="plugz-user">Plugz Email</label></th>
-                                            <td><input <?php if ($plugzConnected && $status['status'] == '200') : ?>disabled="disabled" <?php endif; ?>type="text" placeholder="your@email.com" class="regular-text" value="<?= $plugz['user']; ?>" id="plugz-user" name="<?php if ($plugzConnected && $status['status'] == '200') : ?>disabled-user<?php else : ?>plugz-settings[user]<?php endif; ?>" style="width:320px;">
+                                            <td><input <?php if ($plugzConnected && $status['status'] == '200') : ?>disabled="disabled" <?php endif; ?>type="text" placeholder="your@email.com" class="regular-text" value="<?= @$plugz['user']; ?>" id="plugz-user" name="<?php if ($plugzConnected && $status['status'] == '200') : ?>disabled-user<?php else : ?>plugz-settings[user]<?php endif; ?>" style="width:320px;">
                                                  <?php if ($plugzConnected && $status['status'] == '200') : ?><input type="hidden" value="<?= $plugz['user']; ?>" name="plugz-settings[user]"><?php endif; ?>
                                             </td>
                                         </tr>
@@ -178,7 +178,9 @@
                                         <tr valign="top">
                                             <th scope="row"><label for="plugz-api_status">API Status</label></th>
                                             <td>
-                                                <p class="description" style="color:#<?= $status['status'] == '200' ? '090' : 'C30'; ?>"><?= $status['message']; ?></p>
+                                                <p class="description" style="color:#<?= $status['status'] == '200' ? '090' : 'C30'; ?>"><?= $status['message']; ?>
+                                                    <?php if ($status['status'] == '200') : ?> <a href="/wp-admin/admin.php?page=plugz/settings&logout=1&noheader=true">Logout from Plugz API</a><?php endif; ?>
+                                                </p>
                                             </td>
                                         </tr>
                                     </tbody>

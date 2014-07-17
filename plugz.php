@@ -4,18 +4,20 @@
   Plugin Script: plugz.php
   Plugin URI: http://www.plugz.co
   Description: Get Premium quality traffic with Plugz. Display related posts on your blog. Boost your site with new visitors or earn money with sponsored content.
-  Version: 1.1
+  Version: 1.1.1
   Author: Plugz.co Team
   Author URI: http://www.plugz.co
+  Text Domain: plugzl18n
+  Domain Path: /lang
   License: GPL2
 
   === RELEASE NOTES ===
+  2014-07-17 - v1.1.1 - support for existing domains
   2014-07-03 - v1.1 - new features: shortcodes, new templates, custom css and easy widget placement on pages and posts
   2014-06-27 - v1.0.1 - bugfixes
   2014-06-22 - v1.0 - first version
  */
 define('PLUGZ_ADMIN_SETTINGS_PAGE', 'plugz');
-
 defined('APPLICATION_ENV') || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 
 if (APPLICATION_ENV == 'development') {
@@ -71,7 +73,6 @@ if (is_admin()) {
     add_action('manage_posts_custom_column', 'plugz_post_data_row', 10, 2);
     add_action('save_post', 'plugz_post', 10, 2);
     add_action('before_delete_post', 'plugz_delete_post');
-    add_action('add_meta_boxes', 'plugz_add_box');
     add_action('wp_dashboard_setup', 'plugz_dashboard_widgets');
 }
 
