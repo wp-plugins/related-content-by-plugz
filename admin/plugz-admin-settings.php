@@ -170,6 +170,8 @@ function plugz_settings_page() {
                                 }
                             }
 
+                            $implodedMainstreamCategories = implode(',', $categoriesMainstreamTmp);
+                            
                             $params = array(
                                 'action' => 'updateWebsite',
                                 'rating' => (isset($website['isadult']) ? ($website['isadult'] ? 'nsfw' : 'mainstream') : ($plugz['rating'] == 'nsfw' ? 'nsfw' : 'mainstream')),
@@ -184,7 +186,7 @@ function plugz_settings_page() {
                                 'tags_gay' => '',
                                 'main_category_adult' => $plugz['rating'] == 'nsfw' ? $plugz['main_category_adult_straight'] : '',
                                 'main_category_adult_gay' => $plugz['rating'] == 'nsfw' ? $plugz['main_category_adult_gay'] : '',
-                                'main_category_nonadult' => $plugz['rating'] == 'mainstream' ? $plugz['main_category_mainstream'] . ',' . implode(',', $categoriesMainstreamTmp) : '',
+                                'main_category_nonadult' => $plugz['rating'] == 'mainstream' ? $plugz['main_category_mainstream'] . (strlen($implodedMainstreamCategories) > 0 ? ','.$implodedMainstreamCategories : '') : '',
                             );
 
                             $frid = plugz_request($params);
