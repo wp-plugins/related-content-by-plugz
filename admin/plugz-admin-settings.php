@@ -147,7 +147,7 @@ function plugz_settings_page() {
                             delete_option('plugz-frid');
                             $status = array('status' => '400', 'message' => 'This website belongs to another user.');
                         } else {
-                            $status = array('status' => '400', 'message' => 'Application error. Please contact us: <a href="https://www.plugz.co/#contact">Plugz</a>');
+                            $status = array('status' => '400', 'message' => 'We couldn\'t creete this website. <a href="https://www.plugz.co/#contact">Please contact us</a> to resolve this problem.');
                         }
                     } else {
                         $status = array('status' => '400', 'message' => 'Please check your email. We have sent you an activation e-mail with the instructions about how to continue.');
