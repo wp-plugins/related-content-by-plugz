@@ -102,7 +102,7 @@ Please use our [contact form](https://www.plugz.co/publisher/support.plug "Plugz
 
 == Changelog ==
 
-= 1.1 =
+= 1.1.1 =
 * Support for existing domains. Fixes the issue when a user had previously registered with a different e-mail account, but with the same domain.
 
 = 1.1 =
