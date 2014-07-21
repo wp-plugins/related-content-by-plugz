@@ -163,7 +163,7 @@ function plugz_settings_page() {
                             $status = array('status' => '400', 'message' => 'This website belongs to another user.');
                         }
                         
-                        if (isset($isValidWebsite[0]) && $isValidWebsite[0] !== false) {
+                        if (!isset($isValidWebsite[0]) || (isset($isValidWebsite[0]) && $isValidWebsite[0] !== false)) {
                             $categoriesMainstreamTmp = $categoriesMainstream;
 
                             foreach ($categoriesMainstreamTmp as $categoriesMainstreamTmpKey => $categoriesMainstreamTmpVal) {
