@@ -146,6 +146,8 @@ function plugz_settings_page() {
                         } elseif (isset($isValidWebsite[0]) && $isValidWebsite[0] === false) {
                             delete_option('plugz-frid');
                             $status = array('status' => '400', 'message' => 'This website belongs to another user.');
+                        } else {
+                            $status = array('status' => '400', 'message' => 'Application error. Please contact us: <a href="https://www.plugz.co/#contact">Plugz</a>');
                         }
                     } else {
                         $status = array('status' => '400', 'message' => 'Please check your email. We have sent you an activation e-mail with the instructions about how to continue.');
