@@ -130,8 +130,6 @@ function plugz_reindex() {
 
             $plugz_post['categories'] = explode(',', $plugz_post['categories']);
 
-            add_post_meta($post->ID, '_plugz_posted', 1, true) || update_post_meta($post->ID, '_plugz_posted', 1);
-
             $data = array();
             $data[$post->ID] = array(
                 'title' => $post->post_title,
