@@ -110,7 +110,7 @@ function plugz_reindex() {
 
         if (isset($imageUrls[$post->ID])) {
             $meta = plugz_get_image_meta($imageUrls[$post->ID]);
-            add_post_meta($post->ID, '_plugz_posted', 1, true) || update_post_meta($post->ID, '_plugz_posted', 1);
+            add_post_meta($post->ID, '_plugz_posted', 1, true) || update_post_meta($post->ID, '_plugz_posted', true);
 
             $tags = wp_get_post_tags($post->ID);
             $plug['tags'] = array();

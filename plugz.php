@@ -685,8 +685,8 @@ function plugz_post_header_columns($columns) {
 function plugz_post_data_row($column_name, $post_id) {
     switch ($column_name) {
         case '_plugz_posted':
-            $plugz_post = get_post_meta($post_id, '_plugz', TRUE);
-            if (isset($plugz_post['posted']) && $plugz_post['posted'] == '1') {
+            $plugz_post = get_post_meta($post_id, '_plugz_posted', TRUE);
+            if (isset($plugz_post) && $plugz_post == '1') {
                 echo '<img src="' . plugins_url('/images/tick16.png', 'related-content-by-plugz/plugz.php') . '" title="Posted to Plugz" alt="Yes" />';
             } else {
                 echo '<img src="' . plugins_url('/images/delete16.png', 'related-content-by-plugz/plugz.php') . '" title="Not yet posted to Plugz" alt="No" />';
