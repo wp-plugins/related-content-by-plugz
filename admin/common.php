@@ -143,7 +143,7 @@ function plugz_reindex() {
                 'tags' => implode(',', $plug['tags']),
                 'posttype' => (isset($plugz['website_type']) && $plugz['website_type'] == 'M' ? 'TUBE' : 'GALLERY'),
                 'models' => '',
-                'action' => 'NEW'
+                'action' => 'INSERT'
             );
             $result = plugz_request(array('action' => 'updatePost', 'posts' => http_build_query($data)));
         }

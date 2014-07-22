@@ -203,7 +203,6 @@ function plugz_box($post) {
     }
 
     $plugz_post['categories'] = explode(',', $plugz_post['categories']);
-    print_r(get_post_meta($post->ID, '_plugz_post', TRUE));
     ?>
     <?php if (!empty($plugz_post['message'])) { ?>
         <div style="padding-top:5px;" class="postbox">
@@ -228,7 +227,6 @@ function plugz_box($post) {
             <div class="tabs-panel" id="pr_categories">
                 <?php
                 $selected = get_post_meta($post->ID, '_plugz_category', TRUE);
-                print_r($selected);
                 ?>
                 <ul class="list:category categorychecklist form-no-clear" id="plugzcategorychecklist">
                     <?php foreach ($categories as $parent => $subcats) { ?>
