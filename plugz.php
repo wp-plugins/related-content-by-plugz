@@ -4,7 +4,7 @@
   Plugin Script: plugz.php
   Plugin URI: http://www.plugz.co
   Description: Get Premium quality traffic with Plugz. Display related posts on your blog. Boost your site with new visitors or earn money with sponsored content.
-  Version: 1.2
+  Version: 1.3
   Author: Plugz.co Team
   Author URI: http://www.plugz.co
   Text Domain: plugzl18n
@@ -12,6 +12,7 @@
   License: GPL2
 
   === RELEASE NOTES ===
+  2014-07-22 - v1.3 - important image indexing bug was fixed
   2014-07-22 - v1.2 - bug fixes, minor changes
   2014-07-17 - v1.1.1 - support for existing domains
   2014-07-03 - v1.1 - new features: shortcodes, new templates, custom css and easy widget placement on pages and posts

@@ -63,8 +63,9 @@ function plugz_connected() {
 }
 
 function plugz_reindex() {
+    $result = plugz_request(array('action' => 'reindex', 'posts' => http_build_query(array())));
     $args = array(
-        'posts_per_page' => 0,
+        'posts_per_page' => -1,
         'offset' => 0,
         'category' => '',
         'orderby' => 'post_date',
@@ -80,6 +81,7 @@ function plugz_reindex() {
         'suppress_filters' => true);
 
     $posts_array = get_posts($args);
+
     $plugz = get_option('plugz-settings');
 
     $imageUrls = array();
@@ -128,6 +130,7 @@ function plugz_reindex() {
 
             $plugz_post['categories'] = explode(',', $plugz_post['categories']);
 
+            $data = array();
             $data[$post->ID] = array(
                 'title' => $post->post_title,
                 'name' => $post->post_name,
@@ -140,19 +143,14 @@ function plugz_reindex() {
                 'tags' => implode(',', $plug['tags']),
                 'posttype' => (isset($plugz['website_type']) && $plugz['website_type'] == 'M' ? 'TUBE' : 'GALLERY'),
                 'models' => '',
-                'action' => 'REINDEX'
+                'action' => 'NEW'
             );
+            $result = plugz_request(array('action' => 'updatePost', 'posts' => http_build_query($data)));
         }
     }
 
     if (count($data)) {
-        $result = plugz_request(array('action' => 'reindex', 'posts' => http_build_query($data)));
-
-        if (isset($result[0]) && $result[0] == 'success') {
-            return true;
-        } else {
-            return false;
-        }
+        return true;
     } else {
         return true;
     }
