@@ -139,7 +139,7 @@
 
                             <li>
                                 <div class="info" id="servicecheck">
-                                    Service Status: <?php if ($plugzConnected) : ?><?php if ($status['status'] == '200') : ?>Connected to the API.<?php else : ?><?php echo $status['message'] ?><?php endif; ?><?php else : ?>Unable to connect to Plugz API at the moment.<?php endif; ?>
+                                    Service Status: <?php if ($plugzConnected) : ?><?php if ($status['status'] == '200') : ?>Connected to the API. <?php if ($widgetCount == 0) : ?><p style="color:#f22">Go to <a href="/wp-admin/admin.php?page=plugz/widgets">Widget menu</a> and add a widget to your pages.</p><?php endif; ?><?php else : ?><?php echo $status['message'] ?><?php endif; ?><?php else : ?>Unable to connect to Plugz API at the moment.<?php endif; ?>
                                 </div>
                             </li>
                             <!-- Hook for admin messages from all plugz plugins -->

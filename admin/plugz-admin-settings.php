@@ -143,6 +143,9 @@ function plugz_settings_page() {
                             update_option('plugz-frid', (int) $isValidWebsite[0]);
                             $website = plugz_request(array('action' => 'getWebsite'));
                             $status = array('status' => '200', 'message' => 'Congratulation, you are connected to the Plugz API.');
+                            
+                            $widgetCount = plugz_request(array('action' => 'countWidgets'));
+                            $widgetCount = (int)@$widgetCount[0];
                         } elseif (isset($isValidWebsite[0]) && $isValidWebsite[0] === false) {
                             delete_option('plugz-frid');
                             $status = array('status' => '400', 'message' => 'This website belongs to another user.');
