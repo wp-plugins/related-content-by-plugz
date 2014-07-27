@@ -86,7 +86,7 @@ include_once(dirname(__FILE__) . '/header.php');
                                                             $pages_array = get_pages(array());
                                                             foreach ($pages_array as $pages_item) :
                                                                 ?> 
-                                                                <option value="<?php echo $pages_item->ID ?>"><?php echo $pages_item->post_title ?></option>
+                                                                <option value="<?php echo $pages_item->ID ?>"><?php echo mb_substr($pages_item->post_title, 0, 60) ?></option>
                                                             <?php endforeach; ?>
                                                         </select></span>
                                                 </p>
@@ -97,7 +97,7 @@ include_once(dirname(__FILE__) . '/header.php');
                                                             $posts_array = get_posts(array('posts_per_page' => 20));
                                                             foreach ($posts_array as $posts_item) :
                                                                 ?> 
-                                                                <option value="<?php echo $pages_item->ID ?>"><?php echo $posts_item->post_title ?></option>
+                                                                <option value="<?php echo $pages_item->ID ?>"><?php echo mb_substr($posts_item->post_title, 0, 60) ?></option>
                                                             <?php endforeach; ?>
                                                         </select></span>
                                                 </p>                
@@ -119,13 +119,13 @@ include_once(dirname(__FILE__) . '/header.php');
                                                "submit_fieldset" style=
                                                "display: block;">
                                                 <button class="button-primary"
-                                                        id="save" name="save">Save and
-                                                    Get Code</button></p>
+                                                        id="save" name="save">Save and activate the code</button></p>
 
                                             <div>
+                                                <label style="display:none;" class="control-label" for="widget_code" id="widget_code_label"><i>Your Code (optional)</i></label>
                                                 <input id="widget_code"
                                                        readonly="yes" style=
-                                                       "width: 600px; display: none;"
+                                                       "width: 200px; display: none;"
                                                        type="text">
                                             </div>
                                         </fieldset>
@@ -248,7 +248,7 @@ padding-top:5px;
                                                         <div class="entry_wrap clearfix">
                                                             <div class="entry_img"><img src="<?php echo PLUGZ_IMAGE_DIR ?>/template6.png" alt="" /></div>
                                                             <div class="entry_content">
-                                                                <h4>LinkWithin</h4>
+                                                                <h4>LinkWithin style</h4>
                                                                 <div><small><strong>Image: </strong>3</small></div>
                                                                 <div><small><strong>Text: </strong>under the image</small></div>
                                                                 <div><small><strong>Based on: </strong>LinkWithIn</small></div>
@@ -333,7 +333,7 @@ padding-top:10px;
                                                         <div class="entry_wrap clearfix">
                                                             <div class="entry_img"><img src="<?php echo PLUGZ_IMAGE_DIR ?>/template6.png" alt="" /></div>
                                                             <div class="entry_content">
-                                                                <h4>Polaroid</h4>
+                                                                <h4>Polaroid style</h4>
                                                                 <div><small><strong>Image: </strong>3</small></div>
                                                                 <div><small><strong>Text: </strong>under the image</small></div>
                                                                 <div><small><strong>Rotated randomly: </strong>Turns your images into Polaroid pictures.</small></div>
@@ -386,7 +386,7 @@ color:#039;
                                                         <div class="entry_wrap clearfix">
                                                             <div class="entry_img"><img src="<?php echo PLUGZ_IMAGE_DIR ?>/template6.png" alt="" /></div>
                                                             <div class="entry_content">
-                                                                <h4>ToonBarn</h4>
+                                                                <h4>ToonBarn style</h4>
                                                                 <div><small><strong>Image: </strong>3</small></div>
                                                                 <div><small><strong>Text: </strong>on the image</small></div>
                                                                 <div><small><strong>Based on: </strong>ToonBarn.com</small></div>
@@ -443,7 +443,7 @@ color:#039;
                                                         <div class="entry_wrap clearfix">
                                                             <div class="entry_img"><img src="<?php echo PLUGZ_IMAGE_DIR ?>/template6.png" alt="" /></div>
                                                             <div class="entry_content">
-                                                                <h4>Trendland</h4>
+                                                                <h4>Trendland style</h4>
                                                                 <div><small><strong>Image: </strong>3</small></div>
                                                                 <div><small><strong>Text: </strong>on the image</small></div>
                                                                 <div><small><strong>Based on: </strong>Trendland.net</small></div>
@@ -1630,6 +1630,7 @@ color:#039;
                     $('#widget_id').val(data.id);
                     $(".widget_settings").data('widget-id', data.id);
                     $(".widget_placement").trigger('change');
+                    $('#widget_code_label').show();
                     $('#widget_code').val('[' + 'plugz id=' + data.id + ']');
                 }).done(function() {
                     $("#busy").hide();

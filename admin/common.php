@@ -130,7 +130,6 @@ function plugz_reindex() {
 
             $plugz_post['categories'] = explode(',', $plugz_post['categories']);
 
-            $data = array();
             $data[$post->ID] = array(
                 'title' => $post->post_title,
                 'name' => $post->post_name,
@@ -145,11 +144,11 @@ function plugz_reindex() {
                 'models' => '',
                 'action' => 'INSERT'
             );
-            $result = plugz_request(array('action' => 'updatePost', 'posts' => http_build_query($data)));
         }
     }
 
     if (count($data)) {
+        $result = plugz_request(array('action' => 'updatePost', 'posts' => http_build_query($data)));
         return true;
     } else {
         return true;

@@ -200,7 +200,7 @@ function plugz_settings_page() {
                             update_option('plugz-api-key', $webmaster['wptoken']);
                             update_option('plugz-frid', (int) $frid[0]);
 
-                            if (!$plugzHasBeenIndexed) {
+                            if (!$plugzHasBeenIndexed && $isActivated) {
                                 plugz_reindex();
                                 update_option('plugz-has-been-indexed', 1);
                             }
@@ -225,6 +225,11 @@ function plugz_settings_page() {
                     } else {
                         $website = plugz_request(array('action' => 'getWebsite'));
                         $categories = explode(',', $website['tags']);
+
+                        if (!empty($_GET['reindex']) && !$plugzHasBeenIndexed && $isActivated) {
+                            plugz_reindex();
+                            update_option('plugz-has-been-indexed', 1);
+                        }
 
                         update_option('plugz-settings', array(
                             'user' => $plugz['user'],

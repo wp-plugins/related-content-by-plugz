@@ -15,7 +15,23 @@ function plugz_widgets_page() {
         $plugzConnected = false;
         echo '<div id="message" class="error fade"><p><strong>Cannot connect to Plugz API, please try again later.</strong></p></div>';
     } else {
-        $plugzConnected = true;
+        $webmaster = plugz_request(array('action' => 'getWebmaster'));
+
+        if (isset($webmaster['status'])) {
+            $isActivated = ($webmaster['status'] == 'A' ? true : false);
+
+            if ($isActivated) {
+                $plugzConnected = true;
+            } else {
+                $plugzConnected = false;
+            }
+        } else {
+            $plugzConnected = false;
+        }
+        
+        if (!$plugzConnected) {
+            echo '<div id="message" class="error fade"><p><strong>You have to activate before you add a widget. Please click the activation link in the email, that we have sent during registration.</strong></p></div>';
+        }
     }
 
     $apiKey = get_option('plugz-api-key', '');
