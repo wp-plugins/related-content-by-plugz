@@ -54,7 +54,7 @@ function plugz_get_image_meta($url) {
 
 function plugz_connected() {
     $result = plugz_request(array('action' => 'hello'));
-    
+
     if (isset($result[0]) && $result[0] == 'success') {
         return true;
     } else {
@@ -62,11 +62,14 @@ function plugz_connected() {
     }
 }
 
-function plugz_reindex() {
-    $result = plugz_request(array('action' => 'reindex', 'posts' => http_build_query(array())));
+function plugz_reindex($limit = -1, $offset = 0) {
+    if ($limit == -1) {
+        $result = plugz_request(array('action' => 'reindex', 'posts' => http_build_query(array())));
+    }
+    
     $args = array(
-        'posts_per_page' => -1,
-        'offset' => 0,
+        'posts_per_page' => $limit,
+        'offset' => $offset,
         'category' => '',
         'orderby' => 'post_date',
         'order' => 'DESC',
@@ -87,64 +90,79 @@ function plugz_reindex() {
     $imageUrls = array();
     $data = array();
 
-    foreach ($posts_array as $post) {
-        $image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'single-post-thumbnail');
+    if (count($posts_array)) {
+        foreach ($posts_array as $post) {
+            $image = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'single-post-thumbnail');
 
-        if (!empty($image[0])) {
-            $imageUrls[$post->ID] = $image[0];
-        } else {
-            $dom = new domDocument;
-            $dom->loadHTML($post->post_content);
-            $dom->preserveWhiteSpace = false;
-            $imagesDom = $dom->getElementsByTagName('img');
+            if (!empty($image[0])) {
+                $imageUrls[$post->ID] = $image[0];
+            } else {
+                $dom = new domDocument;
+                $dom->loadHTML($post->post_content);
+                $dom->preserveWhiteSpace = false;
+                $imagesDom = $dom->getElementsByTagName('img');
 
-            $images = array();
-            foreach ($imagesDom as $node) {
-                $images[] = $node;
+                $images = array();
+                foreach ($imagesDom as $node) {
+                    $images[] = $node;
+                    break;
+                }
+
+                if (isset($images[0])) {
+                    $imageUrls[$post->ID] = $images[0]->getAttribute('src');
+                }
             }
 
-            if (isset($images[0])) {
-                $imageUrls[$post->ID] = $images[0]->getAttribute('src');
+            if (isset($imageUrls[$post->ID])) {
+                $meta = plugz_get_image_meta($imageUrls[$post->ID]);
+                add_post_meta($post->ID, '_plugz_posted', 1, true) || update_post_meta($post->ID, '_plugz_posted', true);
+
+                $tags = wp_get_post_tags($post->ID);
+                $plug['tags'] = array();
+
+                foreach ($tags as $tag) {
+                    $plug['tags'][] = $tag->name;
+                }
+
+                $plugz_post = get_post_meta($post->ID, '_plugz', TRUE);
+                $plugz_post_content = get_post($post->ID);
+
+                $plug['description'] = $plugz_post_content->post_excerpt;
+
+                if (!isset($plugz_post['categories'])) {
+                    $plugz_post['categories'] = '';
+                }
+
+                $plugz_post['categories'] = explode(',', $plugz_post['categories']);
+
+                $data[$post->ID] = array(
+                    'title' => $post->post_title,
+                    'name' => $post->post_name,
+                    'url' => $post->guid,
+                    'descr' => $plug['description'],
+                    'image' => $imageUrls[$post->ID],
+                    'width' => $meta[0],
+                    'height' => $meta[1],
+                    'categories' => implode(',', $plugz_post['categories']),
+                    'tags' => implode(',', $plug['tags']),
+                    'posttype' => (isset($plugz['website_type']) && $plugz['website_type'] == 'M' ? 'TUBE' : 'GALLERY'),
+                    'models' => '',
+                    'action' => 'INSERT'
+                );
             }
         }
 
-        if (isset($imageUrls[$post->ID])) {
-            $meta = plugz_get_image_meta($imageUrls[$post->ID]);
-            add_post_meta($post->ID, '_plugz_posted', 1, true) || update_post_meta($post->ID, '_plugz_posted', true);
-
-            $tags = wp_get_post_tags($post->ID);
-            $plug['tags'] = array();
-
-            foreach ($tags as $tag) {
-                $plug['tags'][] = $tag->name;
-            }
-
-            $plugz_post = get_post_meta($post->ID, '_plugz', TRUE);
-            $plugz_post_content = get_post($post->ID);
-
-            $plug['description'] = $plugz_post_content->post_excerpt;
-
-            if (!isset($plugz_post['categories'])) {
-                $plugz_post['categories'] = '';
-            }
-
-            $plugz_post['categories'] = explode(',', $plugz_post['categories']);
-
-            $data[$post->ID] = array(
-                'title' => $post->post_title,
-                'name' => $post->post_name,
-                'url' => $post->guid,
-                'descr' => $plug['description'],
-                'image' => $imageUrls[$post->ID],
-                'width' => $meta[0],
-                'height' => $meta[1],
-                'categories' => implode(',', $plugz_post['categories']),
-                'tags' => implode(',', $plug['tags']),
-                'posttype' => (isset($plugz['website_type']) && $plugz['website_type'] == 'M' ? 'TUBE' : 'GALLERY'),
-                'models' => '',
-                'action' => 'INSERT'
-            );
+        if ($limit > -1) {
+            update_option('plugz-start-index-schedule', 1);
+            update_option('plugz-index-schedule-limit', 10);
+            update_option('plugz-index-schedule-offet', $offset+$limit);
+            update_option('plugz-has-been-indexed', 0);
         }
+    } else {
+        update_option('plugz-start-index-schedule', 0);
+        update_option('plugz-index-schedule-limit', 10);
+        update_option('plugz-index-schedule-offet', 0);
+        update_option('plugz-has-been-indexed', 1);
     }
 
     if (count($data)) {

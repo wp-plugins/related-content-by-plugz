@@ -75,6 +75,7 @@ function plugz_settings_page() {
     }
 
     $status = plugz_request(array('action' => 'isIndexed'));
+    $plugzHasBeenIndexed = get_option('plugz-has-been-indexed', 0);
 
     if (isset($status['error'])) {
         echo '<div id="message" class="error fade"><p><strong>' . $status['error'] . '</strong></p></div>';
@@ -83,13 +84,12 @@ function plugz_settings_page() {
         if (!isset($status[0]) || $status[0] > 0) {
             $isIndexed = false;
         } else {
-            $isIndexed = true;
+            $isIndexed = (boolean) $plugzHasBeenIndexed;
         }
     }
 
     $plugz = get_option('plugz-settings');
     $frid = get_option('plugz-frid', '');
-    $plugzHasBeenIndexed = get_option('plugz-has-been-indexed', 0);
 
     if (empty($plugz['rating'])) {
         $plugz['rating'] = 'mainstream';
@@ -201,8 +201,10 @@ function plugz_settings_page() {
                             update_option('plugz-frid', (int) $frid[0]);
 
                             if (!$plugzHasBeenIndexed && $isActivated) {
-                                plugz_reindex();
-                                update_option('plugz-has-been-indexed', 1);
+                                update_option('plugz-start-index-schedule', 1);
+                                update_option('plugz-index-schedule-limit', 10);
+                                update_option('plugz-index-schedule-offet', 0);
+                                update_option('plugz-has-been-indexed', 0);
                             }
 
                             $website = plugz_request(array('action' => 'getWebsite'));
@@ -227,8 +229,10 @@ function plugz_settings_page() {
                         $categories = explode(',', $website['tags']);
 
                         if (!empty($_GET['reindex']) && !$plugzHasBeenIndexed && $isActivated) {
-                            plugz_reindex();
-                            update_option('plugz-has-been-indexed', 1);
+                            update_option('plugz-start-index-schedule', 1);
+                            update_option('plugz-index-schedule-limit', 10);
+                            update_option('plugz-index-schedule-offet', 0);
+                            update_option('plugz-has-been-indexed', 0);
                         }
 
                         update_option('plugz-settings', array(
