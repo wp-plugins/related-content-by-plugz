@@ -103,7 +103,7 @@ Please use our [contact form](https://www.plugz.co/publisher/support.plug "Plugz
 == Changelog ==
 
 = 1.3.3.1 =
-* GUID/permalink fix*
+* GUID/permalink fix
 
 = 1.3.3 =
 * Background indexing
