@@ -137,10 +137,16 @@ function plugz_reindex($limit = -1, $offset = 0) {
 
 		setup_postdata($post);
 
+$permalink = post_permalink($post->ID);
+if (empty($permalink)) {
+        $permalink = $post->guid;
+        }
+        
+
                 $data[$post->ID] = array(
                     'title' => $post->post_title,
                     'name' => $post->post_name,
-                    'url' => the_permalink(),
+                    'url' => $permalink,
                     'descr' => $plug['description'],
                     'image' => $imageUrls[$post->ID],
                     'width' => $meta[0],
