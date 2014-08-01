@@ -135,10 +135,12 @@ function plugz_reindex($limit = -1, $offset = 0) {
 
                 $plugz_post['categories'] = explode(',', $plugz_post['categories']);
 
+		setup_postdata($post);
+
                 $data[$post->ID] = array(
                     'title' => $post->post_title,
                     'name' => $post->post_name,
-                    'url' => $post->guid,
+                    'url' => the_permalink(),
                     'descr' => $plug['description'],
                     'image' => $imageUrls[$post->ID],
                     'width' => $meta[0],
@@ -150,6 +152,7 @@ function plugz_reindex($limit = -1, $offset = 0) {
                     'action' => 'INSERT'
                 );
             }
+            wp_reset_postdata();
         }
 
         if ($limit > -1) {
