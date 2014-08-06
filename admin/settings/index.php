@@ -51,11 +51,15 @@
                                        type="submit" value="Re-Index Website">
                                 <script type="text/javascript">
                                     jQuery(function($) {
+										<?php if ($status['status'] == '200') : ?>
                                         if (0 && $('#indexresponse').text().indexOf("Indexing complete") == -1) {
                                             $("#plugz_reindex_button").addClass('disabled').attr('disabled', 'disabled');
                                         } else {
                                             $("#plugz_reindex_button").removeClass('disabled').removeAttr('disabled');
                                         }
+                                        <?php else : ?>
+                                        $("#plugz_reindex_button").addClass('disabled').attr('disabled', 'disabled');
+                                        <?php endif; ?>
 
                                         $('#plugz-rating').change(function() {
                                             if ($('#plugz-rating').val() == 'mainstream') {
