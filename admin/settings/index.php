@@ -51,15 +51,15 @@
                                        type="submit" value="Re-Index Website">
                                 <script type="text/javascript">
                                     jQuery(function($) {
-										<?php if ($status['status'] == '200') : ?>
-                                        if (0 && $('#indexresponse').text().indexOf("Indexing complete") == -1) {
+    <?php if ($status['status'] == '200') : ?>
+                                            if (0 && $('#indexresponse').text().indexOf("Indexing complete") == -1) {
+                                                $("#plugz_reindex_button").addClass('disabled').attr('disabled', 'disabled');
+                                            } else {
+                                                $("#plugz_reindex_button").removeClass('disabled').removeAttr('disabled');
+                                            }
+    <?php else : ?>
                                             $("#plugz_reindex_button").addClass('disabled').attr('disabled', 'disabled');
-                                        } else {
-                                            $("#plugz_reindex_button").removeClass('disabled').removeAttr('disabled');
-                                        }
-                                        <?php else : ?>
-                                        $("#plugz_reindex_button").addClass('disabled').attr('disabled', 'disabled');
-                                        <?php endif; ?>
+    <?php endif; ?>
 
                                         $('#plugz-rating').change(function() {
                                             if ($('#plugz-rating').val() == 'mainstream') {
@@ -171,7 +171,7 @@
                                         <tr valign="top">
                                             <th scope="row"><label for="plugz-user">Plugz Email</label></th>
                                             <td><input <?php if ($plugzConnected && $status['status'] == '200') : ?>disabled="disabled" <?php endif; ?>type="text" placeholder="your@email.com" class="regular-text" value="<?= @$plugz['user']; ?>" id="plugz-user" name="<?php if ($plugzConnected && $status['status'] == '200') : ?>disabled-user<?php else : ?>plugz-settings[user]<?php endif; ?>" style="width:320px;">
-                                                 <?php if ($plugzConnected && $status['status'] == '200') : ?><input type="hidden" value="<?= $plugz['user']; ?>" name="plugz-settings[user]"><?php endif; ?>
+                                                <?php if ($plugzConnected && $status['status'] == '200') : ?><input type="hidden" value="<?= $plugz['user']; ?>" name="plugz-settings[user]"><?php endif; ?>
                                             </td>
                                         </tr>
                                         <tr valign="top">
@@ -234,10 +234,10 @@
                                             <td><select id="plugz-main_category_mainstream" name="plugz-settings[main_category_mainstream]" style="width:320px;">
                                                     <?php foreach ($categoriesMainstream as $parentCategory => $subcats) : ?>
                                                         <?php if (!is_numeric($parentCategory)) : ?><optgroup label="<?php echo $parentCategory ?>">
-                                                            <?php foreach ($subcats as $category) : ?>
-                                                                <option <?php echo ($plugz['main_category_mainstream'] == $category) ? 'selected="selected"' : '' ?> value="<?php echo $category ?>"><?php echo $category ?></option>
-                                                            <?php endforeach; ?>
-                                                        </optgroup>
+                                                                <?php foreach ($subcats as $category) : ?>
+                                                                    <option <?php echo ($plugz['main_category_mainstream'] == $category) ? 'selected="selected"' : '' ?> value="<?php echo $category ?>"><?php echo $category ?></option>
+                                                                <?php endforeach; ?>
+                                                            </optgroup>
                                                         <?php else : ?>
                                                             <option <?php echo ($plugz['main_category_mainstream'] == $subcats) ? 'selected="selected"' : '' ?> value="<?php echo $subcats ?>"><?php echo $subcats ?></option>
                                                         <?php endif; ?>
@@ -250,10 +250,10 @@
                                             <td><select id="plugz-main_category_adult_straight" name="plugz-settings[main_category_adult_straight]" style="width:320px;">
                                                     <?php foreach ($categoriesAdultStraight as $parentCategory => $subcats) : ?>
                                                         <?php if (!is_numeric($parentCategory)) : ?><optgroup label="<?php echo $parentCategory ?>">
-                                                            <?php foreach ($subcats as $category) : ?>
-                                                                <option <?php echo ($plugz['main_category_adult_straight'] == $category) ? 'selected="selected"' : '' ?> value="<?php echo $category ?>"><?php echo $category ?></option>
-                                                            <?php endforeach; ?>
-                                                        </optgroup>
+                                                                <?php foreach ($subcats as $category) : ?>
+                                                                    <option <?php echo ($plugz['main_category_adult_straight'] == $category) ? 'selected="selected"' : '' ?> value="<?php echo $category ?>"><?php echo $category ?></option>
+                                                                <?php endforeach; ?>
+                                                            </optgroup>
                                                         <?php else : ?>
                                                             <option <?php echo ($plugz['main_category_adult_straight'] == $subcats) ? 'selected="selected"' : '' ?> value="<?php echo $subcats ?>"><?php echo $subcats ?></option>
                                                         <?php endif; ?>
@@ -266,10 +266,10 @@
                                             <td><select id="plugz-main_category_adult_gay" name="plugz-settings[main_category_adult_gay]" style="width:320px;">
                                                     <?php foreach ($categoriesAdultGay as $parentCategory => $subcats) : ?>
                                                         <?php if (!is_numeric($parentCategory)) : ?><optgroup label="<?php echo $parentCategory ?>">
-                                                            <?php foreach ($subcats as $category) : ?>
-                                                                <option <?php echo ($plugz['main_category_adult_gay'] == $category) ? 'selected="selected"' : '' ?> value="<?php echo $category ?>"><?php echo $category ?></option>
-                                                            <?php endforeach; ?>
-                                                        </optgroup>
+                                                                <?php foreach ($subcats as $category) : ?>
+                                                                    <option <?php echo ($plugz['main_category_adult_gay'] == $category) ? 'selected="selected"' : '' ?> value="<?php echo $category ?>"><?php echo $category ?></option>
+                                                                <?php endforeach; ?>
+                                                            </optgroup>
                                                         <?php else : ?>
                                                             <option <?php echo ($plugz['main_category_adult_gay'] == $subcats) ? 'selected="selected"' : '' ?> value="<?php echo $subcats ?>"><?php echo $subcats ?></option>
                                                         <?php endif; ?>
@@ -280,33 +280,33 @@
                                     </tbody>
                                 </table>
                             </div><!-- .inside -->
-                            <?php /*if ($status['status'] == '200') { ?>
-                                <hr>
-                                <h3 class="title">Plugs</h3>
-                                <div class="inside" style="margin-left: 2em">
-                                    <p>When you create posts in wordpress, you can have them automatically posted to your plugs in Plugz.</p>
-                                    <table class="form-table">
-                                        <tbody>
-                                            <tr valign="top">
-                                                <th scope="row">Autopost to Plugz</th>
-                                                <td>
-                                                    <fieldset>
-                                                        <legend class="screen-reader-text"><span>Autopost to Plugz</span></legend>
-                                                        <label><input type="radio" name="plugz-settings[autopost]" value="1"<?= $plugz['autopost'] == 1 ? ' checked="checked"' : ''; ?>> Enabled</label><br>
-                                                        <label><input type="radio" name="plugz-settings[autopost]" value="0"<?= $plugz['autopost'] == 0 ? ' checked="checked"' : ''; ?>> Disabled</label>
-                                                    </fieldset>
-                                                    <p class="description">Selecting 'Enabled' will pre-check the "Post to Plugz" option when you create or edit a post</p>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div><!-- .inside -->
-                                <hr>
-                                <h3 class="title">Widgets</h3>
-                                <div class="inside" style="margin-left: 2em">
-                                    <p>Go to your <a href="widgets.php">widgets settings</a> page and place the widgets you've created in Plugz into your theme.</p>
-                                </div><!-- .inside -->
-                            <?php } else*/if ($status['status'] == '401') { ?>
+                            <?php /* if ($status['status'] == '200') { ?>
+                              <hr>
+                              <h3 class="title">Plugs</h3>
+                              <div class="inside" style="margin-left: 2em">
+                              <p>When you create posts in wordpress, you can have them automatically posted to your plugs in Plugz.</p>
+                              <table class="form-table">
+                              <tbody>
+                              <tr valign="top">
+                              <th scope="row">Autopost to Plugz</th>
+                              <td>
+                              <fieldset>
+                              <legend class="screen-reader-text"><span>Autopost to Plugz</span></legend>
+                              <label><input type="radio" name="plugz-settings[autopost]" value="1"<?= $plugz['autopost'] == 1 ? ' checked="checked"' : ''; ?>> Enabled</label><br>
+                              <label><input type="radio" name="plugz-settings[autopost]" value="0"<?= $plugz['autopost'] == 0 ? ' checked="checked"' : ''; ?>> Disabled</label>
+                              </fieldset>
+                              <p class="description">Selecting 'Enabled' will pre-check the "Post to Plugz" option when you create or edit a post</p>
+                              </td>
+                              </tr>
+                              </tbody>
+                              </table>
+                              </div><!-- .inside -->
+                              <hr>
+                              <h3 class="title">Widgets</h3>
+                              <div class="inside" style="margin-left: 2em">
+                              <p>Go to your <a href="widgets.php">widgets settings</a> page and place the widgets you've created in Plugz into your theme.</p>
+                              </div><!-- .inside -->
+                              <?php } else */if ($status['status'] == '401') { ?>
                                 <p><?= plugz_domain_from_url(get_option('siteurl')); ?> is not in your Plugz account. Please add it to your account by going to <a href="//www.plugz.co/websites/add">Plugz.com</a></p>
                             <?php } ?>
                             <hr>

@@ -66,7 +66,7 @@ function plugz_reindex($limit = -1, $offset = 0) {
     if ($limit == -1) {
         $result = plugz_request(array('action' => 'reindex', 'posts' => http_build_query(array())));
     }
-    
+
     $args = array(
         'posts_per_page' => $limit,
         'offset' => $offset,
@@ -135,13 +135,13 @@ function plugz_reindex($limit = -1, $offset = 0) {
 
                 $plugz_post['categories'] = explode(',', $plugz_post['categories']);
 
-		setup_postdata($post);
+                setup_postdata($post);
 
-$permalink = post_permalink($post->ID);
-if (empty($permalink)) {
-        $permalink = $post->guid;
-        }
-        
+                $permalink = post_permalink($post->ID);
+                if (empty($permalink)) {
+                    $permalink = $post->guid;
+                }
+
 
                 $data[$post->ID] = array(
                     'title' => $post->post_title,
@@ -164,7 +164,7 @@ if (empty($permalink)) {
         if ($limit > -1) {
             update_option('plugz-start-index-schedule', 1);
             update_option('plugz-index-schedule-limit', 10);
-            update_option('plugz-index-schedule-offet', $offset+$limit);
+            update_option('plugz-index-schedule-offet', $offset + $limit);
             update_option('plugz-has-been-indexed', 0);
         }
     } else {

@@ -197,7 +197,7 @@ include_once(dirname(__FILE__) . '/header.php');
                                                             <div class="entry_content">
                                                                 <h4>Template 5</h4>
                                                                 <div><small><strong>Image: </strong>5</small></div>
-                                                                <div><small><strong>Text: </strong>right side</small></div>
+                                                                <div><small><strong>Text: </strong>left side</small></div>
                                                                 <div><small><strong>Image Type: </strong>widescreen</small></div>
                                                             </div>
                                                         </div>
@@ -214,37 +214,37 @@ include_once(dirname(__FILE__) . '/header.php');
                                                         </div>
                                                     </li>
                                                     <li data-imageyn="1" data-widget_width="390" data-imagenumber="3" data-imagetype="sqau" data-padding="1" data-border="0" data-fontcolor="003399" data-hovertextcolor="003399" data-imgwidth="110" data-textalign="left" data-letternum="100" data-fontweight="normal" data-customcss="#plugzwidget_plugz .cell_plugz:hover {
-background:#F2F2F5;
-}
+                                                        background:#F2F2F5;
+                                                        }
 
-#plugzwidget_plugz .cell_plugz {
-height: 233px;
-padding:5px 10px 5px 5px;
-border-color: #bfbfc1;
-border-style: none none none solid;
-border-width: medium medium medium 1px;
-cursor: pointer;
-line-height: 1.4;
-text-decoration: none;
-margin:0px;
-}
+                                                        #plugzwidget_plugz .cell_plugz {
+                                                        height: 233px;
+                                                        padding:5px 10px 5px 5px;
+                                                        border-color: #bfbfc1;
+                                                        border-style: none none none solid;
+                                                        border-width: medium medium medium 1px;
+                                                        cursor: pointer;
+                                                        line-height: 1.4;
+                                                        text-decoration: none;
+                                                        margin:0px;
+                                                        }
 
-#plugzwidget_plugz img {
-border: 1px solid #555;
-margin: 0;
-max-width: 100%;
-outline: 0 none;
-padding: 2px;
-} 
+                                                        #plugzwidget_plugz img {
+                                                        border: 1px solid #555;
+                                                        margin: 0;
+                                                        max-width: 100%;
+                                                        outline: 0 none;
+                                                        padding: 2px;
+                                                        } 
 
-#plugzwidget_plugz .cell_plugz:first-child {
-border:none;
-}
+                                                        #plugzwidget_plugz .cell_plugz:first-child {
+                                                        border:none;
+                                                        }
 
-#plugzwidget_plugz .pz_af_plugz {
-color:#000;
-padding-top:5px;
-} " data-hide_widgetbox_custom_css="1" data-hide_textpos="1" data-hide_padding="1" data-hide_border="1" data-hide_imgbdcolor="1" data-hide_imgbdcolorhover="1" data-hide_imageyn="1">
+                                                        #plugzwidget_plugz .pz_af_plugz {
+                                                        color:#000;
+                                                        padding-top:5px;
+                                                        } " data-hide_widgetbox_custom_css="1" data-hide_textpos="1" data-hide_padding="1" data-hide_border="1" data-hide_imgbdcolor="1" data-hide_imgbdcolorhover="1" data-hide_imageyn="1">
                                                         <div class="entry_wrap clearfix">
                                                             <div class="entry_img"><img src="<?php echo PLUGZ_IMAGE_DIR ?>/template6.png" alt="" /></div>
                                                             <div class="entry_content">
@@ -258,77 +258,77 @@ padding-top:5px;
                                                         </div>
                                                     </li>
                                                     <li class="even" data-imageyn="1" data-widget_width="420" data-imagenumber="3" data-imagetype="sqau" data-padding="1" data-border="0" data-fontcolor="003399" data-hovertextcolor="003399" data-imgwidth="110" data-textalign="center" data-letternum="100" data-fontweight="bold" data-customcss="#plugzwidget_plugz .cell_plugz:hover {
-background:#F2F2F5;
-}
+                                                        background:#F2F2F5;
+                                                        }
 
-#plugzwidget_plugz .cell_plugz {
-width: 114px;
-height: 228px;
-padding:5px;
-border: 1px solid #ddd;
-box-shadow: 5px 5px 5px #888;
-text-decoration: none;
-border-color: #bfbfc1;
-border-style: none none none solid;
-border-width: medium medium medium 1px;
-cursor: pointer;
-line-height: 1.4;
-margin:0px 15px 15px 0;
-background:#fff;
-}
+                                                        #plugzwidget_plugz .cell_plugz {
+                                                        width: 114px;
+                                                        height: 228px;
+                                                        padding:5px;
+                                                        border: 1px solid #ddd;
+                                                        box-shadow: 5px 5px 5px #888;
+                                                        text-decoration: none;
+                                                        border-color: #bfbfc1;
+                                                        border-style: none none none solid;
+                                                        border-width: medium medium medium 1px;
+                                                        cursor: pointer;
+                                                        line-height: 1.4;
+                                                        margin:0px 15px 15px 0;
+                                                        background:#fff;
+                                                        }
 
-#plugzwidget_plugz .cell_plugz:nth-child(1) {
-transform:rotate($randdeg1);
--ms-transform:rotate($randdeg1);
--webkit-transform:rotate($randdeg1);        
-}
+                                                        #plugzwidget_plugz .cell_plugz:nth-child(1) {
+                                                        transform:rotate($randdeg1);
+                                                        -ms-transform:rotate($randdeg1);
+                                                        -webkit-transform:rotate($randdeg1);        
+                                                        }
 
-#plugzwidget_plugz .cell_plugz:nth-child(2) {
-transform:rotate($randdeg2);
--ms-transform:rotate($randdeg2);
--webkit-transform:rotate($randdeg2);        
-}
+                                                        #plugzwidget_plugz .cell_plugz:nth-child(2) {
+                                                        transform:rotate($randdeg2);
+                                                        -ms-transform:rotate($randdeg2);
+                                                        -webkit-transform:rotate($randdeg2);        
+                                                        }
 
-#plugzwidget_plugz .cell_plugz:nth-child(3) {
-transform:rotate($randdeg3);
--ms-transform:rotate($randdeg3);
--webkit-transform:rotate($randdeg3);        
-}
+                                                        #plugzwidget_plugz .cell_plugz:nth-child(3) {
+                                                        transform:rotate($randdeg3);
+                                                        -ms-transform:rotate($randdeg3);
+                                                        -webkit-transform:rotate($randdeg3);        
+                                                        }
 
-#plugzwidget_plugz .cell_plugz:nth-child(4) {
-transform:rotate($randdeg1);
--ms-transform:rotate($randdeg1);
--webkit-transform:rotate($randdeg1);        
-}
+                                                        #plugzwidget_plugz .cell_plugz:nth-child(4) {
+                                                        transform:rotate($randdeg1);
+                                                        -ms-transform:rotate($randdeg1);
+                                                        -webkit-transform:rotate($randdeg1);        
+                                                        }
 
-#plugzwidget_plugz .cell_plugz:nth-child(5) {
-transform:rotate($randdeg2);
--ms-transform:rotate($randdeg2);
--webkit-transform:rotate($randdeg2);        
-}
+                                                        #plugzwidget_plugz .cell_plugz:nth-child(5) {
+                                                        transform:rotate($randdeg2);
+                                                        -ms-transform:rotate($randdeg2);
+                                                        -webkit-transform:rotate($randdeg2);        
+                                                        }
 
-#plugzwidget_plugz .cell_plugz:nth-child(6) {
-transform:rotate($randdeg3);
--ms-transform:rotate($randdeg3);
--webkit-transform:rotate($randdeg3);        
-}
+                                                        #plugzwidget_plugz .cell_plugz:nth-child(6) {
+                                                        transform:rotate($randdeg3);
+                                                        -ms-transform:rotate($randdeg3);
+                                                        -webkit-transform:rotate($randdeg3);        
+                                                        }
 
-#plugzwidget_plugz img {
-border: none;
-margin: 0;
-max-width: 100%;
-outline: 0 none;
-padding: 2px;
-} 
+                                                        #plugzwidget_plugz img {
+                                                        border: none;
+                                                        margin: 0;
+                                                        max-width: 100%;
+                                                        outline: 0 none;
+                                                        padding: 2px;
+                                                        } 
 
-#plugzwidget_plugz .cell_plugz:first-child {
-border:none;
-}
+                                                        #plugzwidget_plugz .cell_plugz:first-child {
+                                                        border:none;
+                                                        }
 
-#plugzwidget_plugz .pz_af_plugz {
-color:#000;
-padding-top:10px;
-}
+                                                        #plugzwidget_plugz .pz_af_plugz {
+                                                        color:#000;
+                                                        padding-top:10px;
+                                                        }
                                                         " data-hide_widgetbox_custom_css="1" data-hide_textpos="1" data-hide_imgbdcolorhover="1" data-hide_imgbdcolor="1" data-hide_padding="1" data-hide_imgwidth="1" data-hide_imageyn="1" data-hide_border="1">
                                                         <div class="entry_wrap clearfix">
                                                             <div class="entry_img"><img src="<?php echo PLUGZ_IMAGE_DIR ?>/template6.png" alt="" /></div>
@@ -343,44 +343,44 @@ padding-top:10px;
                                                         </div>
                                                     </li>
                                                     <li data-imageyn="1" data-widget_width="380" data-imagenumber="3" data-imagetype="sqau" data-padding="1" data-border="0" data-textpos="1" data-fontcolor="ffffff" data-hovertextcolor="ffffff" data-imgwidth="110" data-textalign="left" data-letternum="30" data-fontweight="bold" data-customcss="#plugzwidget_plugz .cell_plugz:hover {
-background:#F2F2F5;
-}
+                                                        background:#F2F2F5;
+                                                        }
 
-#plugzwidget_plugz .cell_plugz {
-padding:0px;
-border: 3px solid #000;
-text-decoration: none;
-cursor: pointer;
-line-height: 1.4;
-margin:0px 5px 5px 0px;
-background:#fff;
-}
+                                                        #plugzwidget_plugz .cell_plugz {
+                                                        padding:0px;
+                                                        border: 3px solid #000;
+                                                        text-decoration: none;
+                                                        cursor: pointer;
+                                                        line-height: 1.4;
+                                                        margin:0px 5px 5px 0px;
+                                                        background:#fff;
+                                                        }
 
-#plugzwidget_plugz .title1_plugz {
-bottom:10%;
-width:90%;
-}
+                                                        #plugzwidget_plugz .title1_plugz {
+                                                        bottom:10%;
+                                                        width:90%;
+                                                        }
 
-#plugzwidget_plugz .cell_plugz:hover {
-border-color: #ffa600;
-}
+                                                        #plugzwidget_plugz .cell_plugz:hover {
+                                                        border-color: #ffa600;
+                                                        }
 
-#plugzwidget_plugz img {
-border: none;
-margin: 0;
-max-width: 100%;
-outline: 0 none;
-padding: 0px;
-} 
+                                                        #plugzwidget_plugz img {
+                                                        border: none;
+                                                        margin: 0;
+                                                        max-width: 100%;
+                                                        outline: 0 none;
+                                                        padding: 0px;
+                                                        } 
 
-#plugzwidget_plugz .pz_af_plugz {
-color:#000;
-padding-top:10px;
-}
+                                                        #plugzwidget_plugz .pz_af_plugz {
+                                                        color:#000;
+                                                        padding-top:10px;
+                                                        }
 
-#plugzwidget_plugz .pz_af_plugz #pz_disclaimer_plugz {
-color:#039;
-}
+                                                        #plugzwidget_plugz .pz_af_plugz #pz_disclaimer_plugz {
+                                                        color:#039;
+                                                        }
 
                                                         " data-hide_widgetbox_custom_css="1" data-hide_textpos="1" data-hide_imageyn="1">
                                                         <div class="entry_wrap clearfix">
@@ -396,48 +396,48 @@ color:#039;
                                                         </div>
                                                     </li>
                                                     <li class="even" data-imageyn="1" data-widget_width="360" data-imagenumber="3" data-imagetype="sqau" data-padding="1" data-border="3" data-imgbdcolor="ffffff" data-textpos="1" data-opacolor="ffffff" data-opacity="80" data-fontcolor="003399" data-hovertextcolor="003399" data-imgwidth="110" data-textalign="left" data-letternum="30" data-fontweight="bold" data-customcss="#plugzwidget_plugz .cell_plugz:hover {
-background:#F2F2F5;
-}
+                                                        background:#F2F2F5;
+                                                        }
 
-#plugzwidget_plugz .cell_plugz {
-padding:1px;
-border: 1px double #ccc;
-text-decoration: none;
-cursor: pointer;
-line-height: 1.4;
-margin:0px 5px 5px 0;
-background:#fff;
-}
+                                                        #plugzwidget_plugz .cell_plugz {
+                                                        padding:1px;
+                                                        border: 1px double #ccc;
+                                                        text-decoration: none;
+                                                        cursor: pointer;
+                                                        line-height: 1.4;
+                                                        margin:0px 5px 5px 0;
+                                                        background:#fff;
+                                                        }
 
-#plugzwidget_plugz .title1_plugz {
-bottom:20px;
-height:2em;
-}
+                                                        #plugzwidget_plugz .title1_plugz {
+                                                        bottom:20px;
+                                                        height:2em;
+                                                        }
 
-#plugzwidget_plugz img {
-margin: 0;
-border:none;
-max-width: 100%;
-outline: 0 none;
-padding: 0px;
-} 
+                                                        #plugzwidget_plugz img {
+                                                        margin: 0;
+                                                        border:none;
+                                                        max-width: 100%;
+                                                        outline: 0 none;
+                                                        padding: 0px;
+                                                        } 
 
-#plugzwidget_plugz .cell_plugz:hover .image_div_plugz a {
-border: 3px solid #000;
-}
+                                                        #plugzwidget_plugz .cell_plugz:hover .image_div_plugz a {
+                                                        border: 3px solid #000;
+                                                        }
 
-#plugzwidget_plugz .pz_af_plugz {
-color:#000;
-padding-top:10px;
-}
+                                                        #plugzwidget_plugz .pz_af_plugz {
+                                                        color:#000;
+                                                        padding-top:10px;
+                                                        }
 
-#plugzwidget_plugz .title1_plugz {
-left:0px;
-}
+                                                        #plugzwidget_plugz .title1_plugz {
+                                                        left:0px;
+                                                        }
 
-#plugzwidget_plugz .pz_af_plugz #pz_disclaimer_plugz {
-color:#039;
-}
+                                                        #plugzwidget_plugz .pz_af_plugz #pz_disclaimer_plugz {
+                                                        color:#039;
+                                                        }
 
                                                         " data-hide_widgetbox_custom_css="1" data-hide_textpos="1" data-hide_imageyn="1">
                                                         <div class="entry_wrap clearfix">
@@ -453,44 +453,44 @@ color:#039;
                                                         </div>
                                                     </li>
                                                     <li data-imageyn="1" data-widget_width="500" data-imagenumber="3" data-imagetype="sqau" data-padding="1" data-border="0" data-textpos="1" data-fontcolor="ffffff" data-hovertextcolor="ffffff" data-imgwidth="150" data-textalign="left" data-letternum="30" data-fontweight="bold" data-customcss="#plugzwidget_plugz .cell_plugz:hover {
-background:#F2F2F5;
-}
+                                                        background:#F2F2F5;
+                                                        }
 
-#plugzwidget_plugz .cell_plugz {
-padding:0px;
-border: 5px double #000;
-text-decoration: none;
-cursor: pointer;
-line-height: 1.4;
-margin:0px 5px 5px 0px;
-background:#fff;
-}
+                                                        #plugzwidget_plugz .cell_plugz {
+                                                        padding:0px;
+                                                        border: 5px double #000;
+                                                        text-decoration: none;
+                                                        cursor: pointer;
+                                                        line-height: 1.4;
+                                                        margin:0px 5px 5px 0px;
+                                                        background:#fff;
+                                                        }
 
-#plugzwidget_plugz .title1_plugz {
-bottom:10%;
-width:90%;
-}
+                                                        #plugzwidget_plugz .title1_plugz {
+                                                        bottom:10%;
+                                                        width:90%;
+                                                        }
 
-#plugzwidget_plugz .cell_plugz:hover {
-border-color: #ddd;
-}
+                                                        #plugzwidget_plugz .cell_plugz:hover {
+                                                        border-color: #ddd;
+                                                        }
 
-#plugzwidget_plugz img {
-border: none;
-margin: 0;
-max-width: 100%;
-outline: 0 none;
-padding: 0px;
-} 
+                                                        #plugzwidget_plugz img {
+                                                        border: none;
+                                                        margin: 0;
+                                                        max-width: 100%;
+                                                        outline: 0 none;
+                                                        padding: 0px;
+                                                        } 
 
-#plugzwidget_plugz .pz_af_plugz {
-color:#000;
-padding-top:10px;
-}
+                                                        #plugzwidget_plugz .pz_af_plugz {
+                                                        color:#000;
+                                                        padding-top:10px;
+                                                        }
 
-#plugzwidget_plugz .pz_af_plugz #pz_disclaimer_plugz {
-color:#039;
-}
+                                                        #plugzwidget_plugz .pz_af_plugz #pz_disclaimer_plugz {
+                                                        color:#039;
+                                                        }
                                                         " data-hide_widgetbox_text_settings="1" data-hide_imageyn="1" data-hide_padding="1" data-hide_border="1" data-hide_imgbdcolor="1" data-hide_imgbdcolorhover="1">
                                                         <div class="entry_wrap clearfix">
                                                             <div class="entry_img"><img src="<?php echo PLUGZ_IMAGE_DIR ?>/template6.png" alt="" /></div>
@@ -1436,7 +1436,7 @@ color:#039;
             });
 
             $(document).on("change", "#customcss", function() {
-                showPreview( $("#website").val());
+                showPreview($("#website").val());
             });
 
             $("#gay").select2({

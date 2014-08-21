@@ -70,7 +70,7 @@ function plugz_setup_schedule() {
 
     if (!$timestamp || $timestamp < time()) {
         plugz_do_this_every_half_minute();
-        update_option('plugz_start-index-schedule-timestamp', time()+30);
+        update_option('plugz_start-index-schedule-timestamp', time() + 30);
     }
 }
 
@@ -239,15 +239,15 @@ function plugz_box($post) {
                     <ol>
                         <?php foreach ($plugz_post['errors'] as $key => $error) { ?>
                             <li><?= plugz_error($key, $error); ?></li>
-                    <?php } ?>
+                        <?php } ?>
                     </ol>
-        <?php } ?>
+                <?php } ?>
                 </p></div>
         </div>
     <?php } ?>
-        <?php $thumb = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'full'); ?>
+    <?php $thumb = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'full'); ?>
     <div class="categorydiv" id="pr_cats">
-    <?php if (!empty($categories)) { ?>
+        <?php if (!empty($categories)) { ?>
             <ul class="category-tabs" id="plugz-category-tabs">
                 <li class="tabs"><a tabindex="3" href="#plugz-category-all">Categories</a></li>
             </ul>                
@@ -259,28 +259,28 @@ function plugz_box($post) {
                     <?php foreach ($categories as $parent => $subcats) { ?>
                         <?php if (!is_numeric($parent)) : ?>
                             <li><input id="pr-category-<?= $parent; ?>" type="checkbox" name="_plugz_category[]"<?= is_array($plugz_post['categories']) && in_array($parent, $plugz_post['categories']) ? ' checked="checked"' : ''; ?> value="<?= $parent; ?>" /> <strong><?php echo $parent ?></strong></li>
-                <?php foreach ($subcats as $key => $val) { ?>
+                            <?php foreach ($subcats as $key => $val) { ?>
                                 <li id="plugz_category-<?= $key; ?>">
                                     <label>
                                         <input id="pr-category-<?= $val; ?>" type="checkbox" name="_plugz_category[]"<?= is_array($plugz_post['categories']) && in_array($val, $plugz_post['categories']) ? ' checked="checked"' : ''; ?> value="<?= $val; ?>" />
-                    <?= $val; ?>
+                                        <?= $val; ?>
                                     </label>
                                 </li>
                             <?php } ?>
-            <?php else : ?>
+                        <?php else : ?>
                             <li id="plugz_category-<?= $parent; ?>">
                                 <label>
                                     <input id="pr-category-<?= $parent; ?>" type="checkbox" name="_plugz_category[]"<?= is_array($plugz_post['categories']) && in_array($subcats, $plugz_post['categories']) ? ' checked="checked"' : ''; ?> value="<?= $subcats; ?>" />
-                <?= $subcats; ?>
+                                    <?= $subcats; ?>
                                 </label>
                             </li>
                         <?php endif; ?>
-        <?php } ?>
+                    <?php } ?>
                 </ul>
             </div>
         <?php } else { ?>
             Error: Check your Plugz settings
-    <?php } ?>
+        <?php } ?>
     </div>
     <?php
 }
@@ -304,6 +304,7 @@ function plugz_activate() {
 }
 
 function plugz_deactivate() {
+    
 }
 
 function plugz_admin_notice() {
@@ -405,12 +406,12 @@ function plugz_post($post_id, $post) {
             );
         }
 
-		if (isset($data) && is_array($data)) {
-			$result = plugz_request(array('action' => 'updatePost', 'posts' => http_build_query($data)));
-		} else {
-			$result = array();
-		}
-		
+        if (isset($data) && is_array($data)) {
+            $result = plugz_request(array('action' => 'updatePost', 'posts' => http_build_query($data)));
+        } else {
+            $result = array();
+        }
+
         $status = array();
 
         if (isset($result[0]) && $result[0] == 'success') {
@@ -638,20 +639,20 @@ class Plugz_Widget extends WP_Widget {
 
         function status() {
             $status = array("status" => 1, "message" => "Script has been installed successfully");
-            
+
             if (isset($_GET["format"]) && $_GET["format"] == "json") {
                 header("Content-type: application/json");
                 echo json_encode($status);
             } else {
                 echo $status["message"];
             }
-            
+
             exit();
         }
 
         function update() {
             $status = array("status" => 0, "message" => "Script has not been installed");
-            
+
             if (empty($_POST["secret"]) || empty($_POST["script"])) {
                 $status = array("status" => -1, "message" => "Could not update script");
             } elseif ($_POST["secret"] != $this->apiKey) {
@@ -659,7 +660,7 @@ class Plugz_Widget extends WP_Widget {
             } elseif (empty($_POST["script"])) {
                 $status = array("status" => -1, "message" => "An error occured");
             }
-       
+
             if ($status["status"] == 0) {
                 $this->settings['adblock_code'] = htmlspecialchars($_POST['script']);
                 if (update_option('plugz-settings', $this->settings)) {
