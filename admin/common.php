@@ -48,7 +48,11 @@ function plugz_request($params) {
 
 function plugz_get_image_meta($url) {
     $dimensions = null;
-    $dimensions = getimagesize($url);
+    $dimensions = @getimagesize($url);
+    if ($dimensions === FALSE) {
+        $dimensions = array(0, 0);
+    }
+    
     return $dimensions;
 }
 
@@ -149,8 +153,8 @@ function plugz_reindex($limit = -1, $offset = 0) {
                     'url' => $permalink,
                     'descr' => $plug['description'],
                     'image' => $imageUrls[$post->ID],
-                    'width' => $meta[0],
-                    'height' => $meta[1],
+                    'width' => @$meta[0],
+                    'height' => @$meta[1],
                     'categories' => implode(',', $plugz_post['categories']),
                     'tags' => implode(',', $plug['tags']),
                     'posttype' => (isset($plugz['website_type']) && $plugz['website_type'] == 'M' ? 'TUBE' : 'GALLERY'),
