@@ -3,7 +3,7 @@
 Tags: images, plugs, plugz, plugin, popular posts, post, posts, content, page, pages, related, Related Content, related posts, seo, sponsored, similar posts, trending, trending posts, thumbnails, widget, rss, feed, traffic, boost,
 ad network, ads, advertising, widget, contextual, nrelate, outbrain, yarpp, taboola, money
 Requires at least: 1.8
-Tested up to: 3.9.1
+Tested up to: 4.0
 Stable tag: 1.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
