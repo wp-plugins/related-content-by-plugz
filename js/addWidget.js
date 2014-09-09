@@ -127,7 +127,7 @@ function createEmbedCode(wid) {
     var params = "customcss=" + encodeURIComponent($.trim(customcss)) + ",opacolor_r=" + $("#opacolor_r").val() + ",cff=" + $("#cff").val() + ",sitelink=" + $("#sitelink").val() + ",opacolor_g=" + $("#opacolor_g").val() + ",opacolor_b=" + $("#opacolor_b").val() + ",opacolor_a=" + $("#opacolor_a").val() + ",opacolor=" + opc + ",opacity=" + opa + ",titlelength=" + tl + ",ca=" + ca + ",c=" + c + ",nh=" + nh + ",ai=0" + ",id=" + id + ",iyn=" + iyn + ",db=" + db
             + ",htc=" + htc + ",ibch=" + ibch + ",it=" + it + ",wt=" + wt + ",iw=" + iw + ",pd=" + pd
             + ",br=" + br + ",bty=" + bty + ",brc=" + brc + ",st=" + st + ",tp=" + tp + ",ta=" + ta + ",dec=" + dec
-            + ",ff=" + ff + ",fsz=" + fsz + ",fs=" + fs + ",fw=" + fw + ",fc=" + fc + ",ch=" + ch + ",adv=" + sru + ",lp=" + sete + ",str=" + str + ",show_only_my_trades=" + sntw;
+            + ",ff=" + ff + ",fsz=" + fsz + ",fs=" + fs + ",fw=" + fw + ",fc=" + fc + ",ch=" + ch + ",adv=" + sru + ",lp=" + sete + ",str=" + str + ",show_only_my_trades=" + sntw+",sexual_orientation="+$("#sexual_orientation").val()+",monetize_traffic="+$("#monetize_traffic").val();
     try {
 
         var tags0 = [document.getElementById("straight").value, document.getElementById("gay").value, document.getElementById("nonadult_parent").value];
