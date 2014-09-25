@@ -143,4 +143,3 @@ Please use our [contact form](https://www.plugz.co/publisher/support.plug "Plugz
 
 = 1.0 =
 * First release
-

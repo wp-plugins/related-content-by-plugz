@@ -32,6 +32,7 @@ include_once(dirname(__FILE__) . '/header.php');
                                                value="save">
 
                                         <fieldset>
+                                            <input type="hidden" id="website" name="wid" value="1152">
                                             <input id="widget_id"
                                                    name="widget_id" type="hidden"
                                                    value=""> <input id="affid"
@@ -1155,7 +1156,6 @@ include_once(dirname(__FILE__) . '/header.php');
         var allow_network = false;
         var first_run = true;
         var defaultForm = '';
-        var sessionHash = '<?php echo md5('plugz_'.date('Y-m-d').  session_id()); ?>';
         var engineDomain = '<?php echo ($plugz['rating'] == 'mainstream' ? 'plugs.co' : 'plugerr.com') ?>';
         var widgetUrl = '<?= $_SERVER['REQUEST_URI'] . '&noheader=true'; ?>';
         var pluginPath = '<?= plugins_url() . '/' . PLUGZ_PLUGIN_NAME; ?>';
@@ -1220,7 +1220,7 @@ include_once(dirname(__FILE__) . '/header.php');
                 $("#opacolor").ColorPicker().trigger('changeColor');
 
                 $("#name").val($(this).find('h4').text());
-                showPreview();
+                showPreview($("#website").val());
             });
 
             view.bind(
@@ -1295,7 +1295,7 @@ include_once(dirname(__FILE__) . '/header.php');
                 },
                 onHide: function(colpkr) {
                     jQuery(colpkr).hide();
-                    createEmbedCode();
+                    createEmbedCode($("#website").val());
                     return false;
                 },
                 onChange: function(hsb, hex, rgb) {
@@ -1314,7 +1314,7 @@ include_once(dirname(__FILE__) . '/header.php');
                 },
                 onHide: function(colpkr) {
                     jQuery(colpkr).hide();
-                    createEmbedCode();
+                    createEmbedCode($("#website").val());
                     return false;
                 },
                 onChange: function(hsb, hex, rgb) {
@@ -1333,7 +1333,7 @@ include_once(dirname(__FILE__) . '/header.php');
                 },
                 onHide: function(colpkr) {
                     jQuery(colpkr).hide();
-                    createEmbedCode();
+                    createEmbedCode($("#website").val());
                     return false;
                 },
                 onChange: function(hsb, hex, rgb) {
@@ -1352,7 +1352,7 @@ include_once(dirname(__FILE__) . '/header.php');
                 },
                 onHide: function(colpkr) {
                     jQuery(colpkr).hide();
-                    createEmbedCode();
+                    createEmbedCode($("#website").val());
                     return false;
                 },
                 onChange: function(hsb, hex, rgb) {
@@ -1371,7 +1371,7 @@ include_once(dirname(__FILE__) . '/header.php');
                 },
                 onHide: function(colpkr) {
                     jQuery(colpkr).hide();
-                    createEmbedCode();
+                    createEmbedCode($("#website").val());
                     return false;
                 },
                 onChange: function(hsb, hex, rgb) {
@@ -1407,10 +1407,38 @@ include_once(dirname(__FILE__) . '/header.php');
                 }
             });
 
-            $(document).on("change", "#customcss", function() {
-                showPreview();
+            $("#website").change(function() {
+                var $website = $(this);
+
+                if ($website.val() != '') {
+                    detectab();
+                    $(".widgetbox").show();
+                }
+
+                if (!first_run) {
+                    var tagsa = [
+                        document.getElementById("straight"),
+                        document.getElementById("gay"),
+                        document.getElementById("adult_tags"),
+                        document.getElementById("nonadult_parent"),
+                        document.getElementById("nonadult")
+                    ];
+
+                    for (i = 0; i < tagsa.length; i++) {
+                        if (tagsa[i])
+                            tagsa[i].value = '';
+                    }
+                }
+
+                $("#textpos").trigger('change');
+                $("#sexual_orientation").trigger('change');
+                showPreview($($website).val());
             });
-                    
+
+            $(document).on("change", "#customcss", function() {
+                showPreview($("#website").val());
+            });
+
             $("#gay").select2({
                 width: "90%",
                 maximumSelectionSize: 8,
@@ -1558,11 +1586,11 @@ include_once(dirname(__FILE__) . '/header.php');
                     }
                 }
             });
-            
-            $("#sexual_orientation").trigger('change');
+
+            $("#website").trigger('change');
 
             $(".widgetbox input, .widgetbox select").change(function() {
-                showPreview();
+                createEmbedCode($("#website").val());
             });
 
             $("#show_network_row").hide();
