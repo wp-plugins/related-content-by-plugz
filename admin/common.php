@@ -146,7 +146,6 @@ function plugz_reindex($limit = -1, $offset = 0) {
                     $permalink = $post->guid;
                 }
 
-
                 $data[$post->ID] = array(
                     'title' => $post->post_title,
                     'name' => $post->post_name,

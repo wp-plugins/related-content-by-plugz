@@ -4,7 +4,7 @@
   Plugin Script: plugz.php
   Plugin URI: http://www.plugz.co
   Description: Get Premium quality traffic with Plugz. Display related posts on your blog. Boost your site with new visitors or earn money with sponsored content.
-  Version: 1.4.1
+  Version: 1.4.2
   Author: Plugz.co Team
   Author URI: http://www.plugz.co
   Text Domain: plugzl18n
@@ -12,6 +12,7 @@
   License: GPL2
 
   === RELEASE NOTES ===
+  2014-10-07 - v1.4.2 - post update url bug fix for permalinks
   2014-09-25 - v1.4.1 - widget preview related improvements
   2014-09-25 - v1.4 - fixes widget preview with long custom css bug
   2014-09-09 - v1.3.6 - fixes monetize and gay widget preview bugs
@@ -393,19 +394,24 @@ function plugz_post($post_id, $post) {
         if (isset($imageUrls[$post_id])) {
             $meta = plugz_get_image_meta($imageUrls[$post_id]);
             add_post_meta($post_id, '_plugz_posted', 1, true) || update_post_meta($post_id, '_plugz_posted', 1);
+           
+            $permalink = post_permalink($post->ID);
+            if (empty($permalink)) {
+                $permalink = $post->guid;
+            }
 
             $data[$post_id] = array(
                 'title' => $post->post_title,
                 'name' => $post->post_name,
-                'url' => $post->guid,
+                'url' => $permalink,
                 'descr' => $plug['description'],
                 'image' => $imageUrls[$post->ID],
-                'width' => $meta[0],
-                'height' => $meta[1],
+                'width' => @$meta[0],
+                'height' => @$meta[1],
                 'categories' => $plug['categories'],
                 'tags' => implode(',', $plug['tags']),
                 'posttype' => (isset($plugz['website_type']) && $plugz['website_type'] == 'M' ? 'TUBE' : 'GALLERY'),
-                'models' => null,
+                'models' => '',
                 'action' => 'UPDATE'
             );
         }
