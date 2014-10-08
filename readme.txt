@@ -4,7 +4,7 @@ Tags: images, plugs, plugz, plugin, popular posts, post, posts, content, page, p
 ad network, ads, advertising, widget, contextual, nrelate, outbrain, yarpp, taboola, money
 Requires at least: 1.8
 Tested up to: 4.0
-Stable tag: 1.4.2
+Stable tag: 1.4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Contributors: Plugz Team
@@ -102,8 +102,11 @@ Please use our [contact form](https://www.plugz.co/publisher/support.plug "Plugz
 
 == Changelog ==
 
+= 1.4.3 =
+* Suppressing PHP warnings
+
 = 1.4.2 =
-* Post update url bug fix for permalinks
+* Post update URL bug fix for permalinks
 
 = 1.4.1 =
 * Widget preview related improvements
