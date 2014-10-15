@@ -4,7 +4,7 @@
   Plugin Script: plugz.php
   Plugin URI: http://www.plugz.co
   Description: Get Premium quality traffic with Plugz. Display related posts on your blog. Boost your site with new visitors or earn money with sponsored content.
-  Version: 1.4.3
+  Version: 1.4.4
   Author: Plugz.co Team
   Author URI: http://www.plugz.co
   Text Domain: plugzl18n
@@ -12,6 +12,7 @@
   License: GPL2
 
   === RELEASE NOTES ===
+  2014-10-15 - v1.4.4 - minor improvements on plugz plugin install/uninstall
   2014-10-08 - v1.4.3 - suppressing php warnings
   2014-10-07 - v1.4.2 - post update url bug fix for permalinks
   2014-09-25 - v1.4.1 - widget preview related improvements
@@ -93,6 +94,7 @@ if (is_admin()) {
     add_action('admin_init', 'plugz_settings');
     register_activation_hook(__FILE__, 'plugz_activate');
     register_deactivation_hook(__FILE__, 'plugz_deactivate');
+    register_uninstall_hook(__FILE__, 'plugz_uninstall');
     $plugin = plugin_basename(__FILE__);
     add_filter("plugin_action_links_$plugin", 'plugz_settings_link');
     add_action('post_submitbox_misc_actions', 'plugz_publish_box');
@@ -309,10 +311,21 @@ function plugz_head() {
 
 function plugz_activate() {
     add_action('admin_notices', 'plugz_admin_notice');
+    plugz_request(array('action' => 'installWpPlugin'));
 }
 
 function plugz_deactivate() {
+    plugz_request(array('action' => 'uninstallWpPlugin'));
+}
+
+function plugz_uninstall() {
+    if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
+        exit();
+    }
     
+    plugz_request(array('action' => 'uninstallWpPlugin'));
+    
+    delete_option('plugz-settings');
 }
 
 function plugz_admin_notice() {
