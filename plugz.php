@@ -4,7 +4,7 @@
   Plugin Script: plugz.php
   Plugin URI: http://www.plugz.co
   Description: Get Premium quality traffic with Plugz. Display related posts on your blog. Boost your site with new visitors or earn money with sponsored content.
-  Version: 1.4.5
+  Version: 1.4.6
   Author: Plugz.co Team
   Author URI: http://www.plugz.co
   Text Domain: plugzl18n
@@ -12,6 +12,7 @@
   License: GPL2
 
   === RELEASE NOTES ===
+  2014-10-29 - v1.4.6 - fixes bug on plugin removal
   2014-10-23 - v1.4.5 - remove all plugz options on plugz plugin uninstall
   2014-10-15 - v1.4.4 - minor improvements on plugz plugin install/uninstall
   2014-10-08 - v1.4.3 - suppressing php warnings
@@ -317,22 +318,19 @@ function plugz_activate() {
 
 function plugz_deactivate() {
     plugz_request(array('action' => 'uninstallWpPlugin'));
-	delete_option('plugz-api-key');
-	delete_option('plugz-frid');
-	delete_option('plugz-has-been-indexed');
+    
+    delete_option('plugz-api-key');
+    delete_option('plugz-frid');
+    delete_option('plugz-has-been-indexed');
     delete_option('plugz-settings');
 }
 
 function plugz_uninstall() {
-    if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-        exit();
-    }
-    
     plugz_request(array('action' => 'uninstallWpPlugin'));
     
-	delete_option('plugz-api-key');
-	delete_option('plugz-frid');
-	delete_option('plugz-has-been-indexed');
+    delete_option('plugz-api-key');
+    delete_option('plugz-frid');
+    delete_option('plugz-has-been-indexed');
     delete_option('plugz-settings');
 }
 
