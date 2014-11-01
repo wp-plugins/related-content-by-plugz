@@ -18,9 +18,9 @@ function plugz_request($params) {
     }
 
     $plugz = get_option('plugz-settings');
-
     $params['email'] = $plugz['user'];
     $params['password'] = $plugz['password'];
+    $params['affid'] = (int)@$plugz['affid'];
     $params['apiKey'] = get_option('plugz-api-key');
     $params['frid'] = get_option('plugz-frid');
     $params['domain'] = plugz_domain_from_url(get_option('siteurl'));

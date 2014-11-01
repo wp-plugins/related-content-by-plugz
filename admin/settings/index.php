@@ -170,7 +170,7 @@
                                     <tbody>
                                         <tr valign="top">
                                             <th scope="row"><label for="plugz-user">Plugz Email</label></th>
-                                            <td><input <?php if ($plugzConnected && $status['status'] == '200') : ?>disabled="disabled" <?php endif; ?>type="text" placeholder="your@email.com" class="regular-text" value="<?= @$plugz['user']; ?>" id="plugz-user" name="<?php if ($plugzConnected && $status['status'] == '200') : ?>disabled-user<?php else : ?>plugz-settings[user]<?php endif; ?>" style="width:320px;">
+                                            <td><input type="hidden" id="plugz_affid" name="plugz-settings[affid]"><input <?php if ($plugzConnected && $status['status'] == '200') : ?>disabled="disabled" <?php endif; ?>type="text" placeholder="your@email.com" class="regular-text" value="<?= @$plugz['user']; ?>" id="plugz-user" name="<?php if ($plugzConnected && $status['status'] == '200') : ?>disabled-user<?php else : ?>plugz-settings[user]<?php endif; ?>" style="width:320px;">
                                                 <?php if ($plugzConnected && $status['status'] == '200') : ?><input type="hidden" value="<?= $plugz['user']; ?>" name="plugz-settings[user]"><?php endif; ?>
                                             </td>
                                         </tr>
@@ -189,6 +189,22 @@
                                         </tr>
                                     </tbody>
                                 </table>
+                                <script>
+                                if(window.addEventListener){
+                                    window.addEventListener("message", function(res){
+                                        if (res.origin == 'https://www.plugz.co') {
+                                            window.document.getElementById("plugz_affid").value = res.data;
+                                        }
+                                    }, false); 
+                                } else if (window.attachEvent){
+                                    window.attachEvent("message", function(res){
+                                        if (res.origin == 'https://www.plugz.co') {
+                                            window.document.getElementById("plugz_affid").value = res.data;
+                                        }
+                                    }, false);
+                                }
+                                </script>
+                                <iframe border="0" style="display:none;width:0;height:0;border:none" height="0" width="0" src="https://www.plugz.co/aff.php" seamless="true"></iframe>
                             </div><!-- .inside -->
                             <hr>
                             <h3 class="title">Website</h3>

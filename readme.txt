@@ -103,6 +103,9 @@ Please use our [contact form](https://www.plugz.co/publisher/support.plug "Plugz
 == Changelog ==
 
 = 1.4.6 =
+* Affiliate support
+
+= 1.4.6 =
 * Fixes bug on plugin removal
 
 = 1.4.5 =

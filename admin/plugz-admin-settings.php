@@ -11,6 +11,7 @@
 function plugz_settings() {
     register_setting('plugz-settings', 'plugz-settings', 'plugz_save');
     add_settings_field('user', 'Plugz Email', 'plugz-user', 'plugz_settings_page');
+    add_settings_field('affid', 'Plugz Affiliate Id', 'plugz-affid', 'plugz_settings_page');
     add_settings_field('password', 'Plugz Password', 'plugz-password', 'plugz_settings_page');
     add_settings_field('rating', 'Website Rating', 'plugz-rating', 'plugz_settings_page');
     add_settings_field('website_type', 'Website Type', 'plugz-website_type', 'plugz_settings_page');
