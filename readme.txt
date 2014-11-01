@@ -102,7 +102,7 @@ Please use our [contact form](https://www.plugz.co/publisher/support.plug "Plugz
 
 == Changelog ==
 
-= 1.4.6 =
+= 1.5 =
 * Affiliate support
 
 = 1.4.6 =
