@@ -4,7 +4,7 @@ Tags: images, plugs, plugz, plugin, popular posts, post, posts, content, page, p
 ad network, ads, advertising, widget, contextual, nrelate, outbrain, yarpp, taboola, money
 Requires at least: 1.8
 Tested up to: 4.0
-Stable tag: 1.5
+Stable tag: 1.5.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 Contributors: Plugz Team
@@ -101,6 +101,9 @@ You can receive payments at this moment by Paypal, Paxum or Wire.
 Please use our [contact form](https://www.plugz.co/publisher/support.plug "Plugz - Support"). 
 
 == Changelog ==
+
+= 1.5.1 =
+* Minor fixes
 
 = 1.5 =
 * Affiliate support

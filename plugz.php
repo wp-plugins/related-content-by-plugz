@@ -4,7 +4,7 @@
   Plugin Script: plugz.php
   Plugin URI: http://www.plugz.co
   Description: Get Premium quality traffic with Plugz. Display related posts on your blog. Boost your site with new visitors or earn money with sponsored content.
-  Version: 1.5
+  Version: 1.5.1
   Author: Plugz.co Team
   Author URI: http://www.plugz.co
   Text Domain: plugzl18n
@@ -12,6 +12,7 @@
   License: GPL2
 
   === RELEASE NOTES ===
+  2014-12-03 - v1.5.1 - minor fixes
   2014-11-01 - v1.5 - affiliate support
   2014-10-29 - v1.4.6 - fixes bug on plugin removal
   2014-10-23 - v1.4.5 - remove all plugz options on plugz plugin uninstall
@@ -118,37 +119,65 @@ function plugz_do_this_every_half_minute() {
     }
 }
 
+function plugz_is_service_up() {
+    if (function_exists('curl_init')) { 
+        $agent = "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)";
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, 'https://www.plugz.co');
+        curl_setopt($ch, CURLOPT_USERAGENT, $agent);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_VERBOSE, false);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSLVERSION, 3);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
+        $page = curl_exec($ch);
+        //echo curl_error($ch);
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        if ($httpcode >= 200 && $httpcode < 300) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}
+
 add_shortcode('plugz', 'plugz_widget_shortcode');
 
 // Configure defaults and extract the attributes into variables
 function plugz_widget_shortcode($atts) {
-    extract(shortcode_atts(
-                    array(
-        'type' => 'plugz_widget',
-        'title' => 'Plugz',
-        'scheme' => 'dark'
-                    ), $atts
-    ));
+    if (plugz_is_service_up()) {
+        extract(shortcode_atts(
+                        array(
+            'type' => 'plugz_widget',
+            'title' => 'Plugz',
+            'scheme' => 'dark'
+                        ), $atts
+        ));
 
-    $args = array(
-        'before_widget' => '<div class="box widget scheme-' . $scheme . ' ">',
-        'after_widget' => '</div>',
-        'before_title' => '<div class="widget-title">',
-        'after_title' => '</div>',
-    );
+        $args = array(
+            'before_widget' => '<div class="box widget scheme-' . $scheme . ' ">',
+            'after_widget' => '</div>',
+            'before_title' => '<div class="widget-title">',
+            'after_title' => '</div>',
+        );
 
-    if (isset($atts['id'])) {
-        $atts['widget_id'] = $atts['id'];
-    }
+        if (isset($atts['id'])) {
+            $atts['widget_id'] = $atts['id'];
+        }
 
-    if (is_singular() && !is_admin()) {
-        ob_start();
-        the_widget($type, $atts, $args);
-        $output = ob_get_clean();
+        if (is_singular() && !is_admin()) {
+            ob_start();
+            the_widget($type, $atts, $args);
+            $output = ob_get_clean();
+        } else {
+            $output = '';
+        }
     } else {
         $output = '';
     }
-
+    
     return $output;
 }
 
@@ -156,39 +185,44 @@ function plugz_widget_shortcode($atts) {
 add_filter('the_content', 'plugz_insert_post_filter');
 
 function plugz_insert_post_filter($content) {
-    $placements = get_option('plugz-widget-placements', array());
-    foreach ($placements as $widgetId => $placement) {
-        if (is_numeric($widgetId)) {
-            if ($placement['placement'] == 'on single page' &&
-                    is_page() &&
-                    !is_admin() &&
-                    get_the_ID() == $placement['page_id']) {
-                $ad_code = '<div>' . do_shortcode("[plugz id=$widgetId]") . '</div>';
-                $content = plugz_insert_post($ad_code, $placement['paragraph'], $content);
-            } elseif ($placement['placement'] == 'on single post' &&
-                    is_single() &&
-                    !is_admin() &&
-                    get_the_ID() == $placement['post_id']) {
-                $ad_code = '<div>' . do_shortcode("[plugz id=$widgetId]") . '</div>';
-                $content = plugz_insert_post($ad_code, $placement['paragraph'], $content);
-            } elseif ($placement['placement'] == 'on all posts and pages' &&
-                    is_singular() &&
-                    !is_admin()) {
-                $ad_code = '<div>' . do_shortcode("[plugz id=$widgetId]") . '</div>';
-                $content = plugz_insert_post($ad_code, $placement['paragraph'], $content);
-            } elseif ($placement['placement'] == 'on all posts' &&
-                    is_single() &&
-                    !is_admin()) {
-                $ad_code = '<div>' . do_shortcode("[plugz id=$widgetId]") . '</div>';
-                $content = plugz_insert_post($ad_code, $placement['paragraph'], $content);
-            } elseif ($placement['placement'] == 'on all pages' &&
-                    is_page() &&
-                    !is_admin()) {
-                $ad_code = '<div>' . do_shortcode("[plugz id=$widgetId]") . '</div>';
-                $content = plugz_insert_post($ad_code, $placement['paragraph'], $content);
+    if (plugz_is_service_up()) {
+        $placements = get_option('plugz-widget-placements', array());
+        foreach ($placements as $widgetId => $placement) {
+            if (is_numeric($widgetId)) {
+                if ($placement['placement'] == 'on single page' &&
+                        is_page() &&
+                        !is_admin() &&
+                        get_the_ID() == $placement['page_id']) {
+                    $ad_code = '<div>' . do_shortcode("[plugz id=$widgetId]") . '</div>';
+                    $content = plugz_insert_post($ad_code, $placement['paragraph'], $content);
+                } elseif ($placement['placement'] == 'on single post' &&
+                        is_single() &&
+                        !is_admin() &&
+                        get_the_ID() == $placement['post_id']) {
+                    $ad_code = '<div>' . do_shortcode("[plugz id=$widgetId]") . '</div>';
+                    $content = plugz_insert_post($ad_code, $placement['paragraph'], $content);
+                } elseif ($placement['placement'] == 'on all posts and pages' &&
+                        is_singular() &&
+                        !is_admin()) {
+                    $ad_code = '<div>' . do_shortcode("[plugz id=$widgetId]") . '</div>';
+                    $content = plugz_insert_post($ad_code, $placement['paragraph'], $content);
+                } elseif ($placement['placement'] == 'on all posts' &&
+                        is_single() &&
+                        !is_admin()) {
+                    $ad_code = '<div>' . do_shortcode("[plugz id=$widgetId]") . '</div>';
+                    $content = plugz_insert_post($ad_code, $placement['paragraph'], $content);
+                } elseif ($placement['placement'] == 'on all pages' &&
+                        is_page() &&
+                        !is_admin()) {
+                    $ad_code = '<div>' . do_shortcode("[plugz id=$widgetId]") . '</div>';
+                    $content = plugz_insert_post($ad_code, $placement['paragraph'], $content);
+                }
             }
         }
+    } else {
+        $content = '';
     }
+
     return $content;
 }
 
@@ -244,56 +278,56 @@ function plugz_box($post) {
 
     $plugz_post['categories'] = explode(',', $plugz_post['categories']);
     ?>
-    <?php if (!empty($plugz_post['message'])) { ?>
+                <?php if (!empty($plugz_post['message'])) { ?>
         <div style="padding-top:5px;" class="postbox">
             <div class="<?= $plugz_post['posted'] == 1 ? 'updated' : 'error'; ?>"><p>
                     <strong>Plugz:</strong> <?= $plugz_post['message']; ?>
                     <?php if (!empty($plugz_post['errors'])) { ?>
                     <ol>
-                        <?php foreach ($plugz_post['errors'] as $key => $error) { ?>
+                    <?php foreach ($plugz_post['errors'] as $key => $error) { ?>
                             <li><?= plugz_error($key, $error); ?></li>
-                        <?php } ?>
+            <?php } ?>
                     </ol>
-                <?php } ?>
+        <?php } ?>
                 </p></div>
         </div>
-    <?php } ?>
+        <?php } ?>
     <?php $thumb = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'full'); ?>
     <div class="categorydiv" id="pr_cats">
-        <?php if (!empty($categories)) { ?>
+    <?php if (!empty($categories)) { ?>
             <ul class="category-tabs" id="plugz-category-tabs">
                 <li class="tabs"><a tabindex="3" href="#plugz-category-all">Categories</a></li>
             </ul>                
             <div class="tabs-panel" id="pr_categories">
-                <?php
-                $selected = get_post_meta($post->ID, '_plugz_category', TRUE);
-                ?>
+                    <?php
+                    $selected = get_post_meta($post->ID, '_plugz_category', TRUE);
+                    ?>
                 <ul class="list:category categorychecklist form-no-clear" id="plugzcategorychecklist">
                     <?php foreach ($categories as $parent => $subcats) { ?>
-                        <?php if (!is_numeric($parent)) : ?>
+            <?php if (!is_numeric($parent)) : ?>
                             <li><input id="pr-category-<?= $parent; ?>" type="checkbox" name="_plugz_category[]"<?= is_array($plugz_post['categories']) && in_array($parent, $plugz_post['categories']) ? ' checked="checked"' : ''; ?> value="<?= $parent; ?>" /> <strong><?php echo $parent ?></strong></li>
-                            <?php foreach ($subcats as $key => $val) { ?>
+                                    <?php foreach ($subcats as $key => $val) { ?>
                                 <li id="plugz_category-<?= $key; ?>">
                                     <label>
                                         <input id="pr-category-<?= $val; ?>" type="checkbox" name="_plugz_category[]"<?= is_array($plugz_post['categories']) && in_array($val, $plugz_post['categories']) ? ' checked="checked"' : ''; ?> value="<?= $val; ?>" />
-                                        <?= $val; ?>
+                                <?= $val; ?>
                                     </label>
                                 </li>
-                            <?php } ?>
-                        <?php else : ?>
+                <?php } ?>
+                                <?php else : ?>
                             <li id="plugz_category-<?= $parent; ?>">
                                 <label>
                                     <input id="pr-category-<?= $parent; ?>" type="checkbox" name="_plugz_category[]"<?= is_array($plugz_post['categories']) && in_array($subcats, $plugz_post['categories']) ? ' checked="checked"' : ''; ?> value="<?= $subcats; ?>" />
-                                    <?= $subcats; ?>
+                            <?= $subcats; ?>
                                 </label>
                             </li>
-                        <?php endif; ?>
-                    <?php } ?>
+                <?php endif; ?>
+            <?php } ?>
                 </ul>
             </div>
-        <?php } else { ?>
+    <?php } else { ?>
             Error: Check your Plugz settings
-        <?php } ?>
+    <?php } ?>
     </div>
     <?php
 }
@@ -319,7 +353,7 @@ function plugz_activate() {
 
 function plugz_deactivate() {
     plugz_request(array('action' => 'uninstallWpPlugin'));
-    
+
     delete_option('plugz-affid');
     delete_option('plugz-api-key');
     delete_option('plugz-frid');
@@ -329,7 +363,7 @@ function plugz_deactivate() {
 
 function plugz_uninstall() {
     plugz_request(array('action' => 'uninstallWpPlugin'));
-    
+
     delete_option('plugz-affid');
     delete_option('plugz-api-key');
     delete_option('plugz-frid');
@@ -419,7 +453,7 @@ function plugz_post($post_id, $post) {
         if (isset($imageUrls[$post_id])) {
             $meta = plugz_get_image_meta($imageUrls[$post_id]);
             add_post_meta($post_id, '_plugz_posted', 1, true) || update_post_meta($post_id, '_plugz_posted', 1);
-           
+
             $permalink = post_permalink($post->ID);
             if (empty($permalink)) {
                 $permalink = $post->guid;
