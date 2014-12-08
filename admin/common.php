@@ -27,10 +27,14 @@ function plugz_request($params) {
     $params['origin'] = $params['domain'];
 
     if (function_exists('curl_init')) {
+		$plugin_data = get_plugin_data( PLUGZ_PLUGIN_DIR.'/plugz.php' );
+		$plugin_version = $plugin_data['Version'];
+
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_HEADER, TRUE);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
         curl_setopt($curl, CURLOPT_POST, TRUE);
+        curl_setopt($curl, CURLOPT_USERAGENT, 'Plugz Plugin '.$plugin_version.' (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
         curl_setopt($curl, CURLOPT_URL, (APPLICATION_ENV == 'development' ? 'http://' : 'https://') . API_DOMAIN . '/wpapi/v1/' . $action);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
         $result = $headers = curl_exec($curl);
