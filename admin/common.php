@@ -27,8 +27,7 @@ function plugz_request($params) {
     $params['origin'] = $params['domain'];
 
     if (function_exists('curl_init')) {
-		$plugin_data = get_plugin_data( PLUGZ_PLUGIN_DIR.'/plugz.php' );
-		$plugin_version = $plugin_data['Version'];
+        $plugin_version = $_ENV['plugz_author_plugindata']['Version'];
 
         $curl = curl_init();
         curl_setopt($curl, CURLOPT_HEADER, TRUE);
@@ -37,6 +36,9 @@ function plugz_request($params) {
         curl_setopt($curl, CURLOPT_USERAGENT, 'Plugz Plugin '.$plugin_version.' (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
         curl_setopt($curl, CURLOPT_URL, (APPLICATION_ENV == 'development' ? 'http://' : 'https://') . API_DOMAIN . '/wpapi/v1/' . $action);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $params);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($ch, CURLOPT_SSLVERSION, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
         $result = $headers = curl_exec($curl);
         $result = explode("\r\n\r\n", $result, 3);
         $result = (array) json_decode($result[2], TRUE);

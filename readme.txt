@@ -102,6 +102,9 @@ Please use our [contact form](https://www.plugz.co/publisher/support.plug "Plugz
 
 == Changelog ==
 
+= 1.5.3 =
+* Support added for wordpress 4.2 (fixed major issue of posts disappearing when plugin was enabled)
+
 = 1.5.2 =
 * Added user agent string on curl requests
 

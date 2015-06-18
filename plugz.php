@@ -4,7 +4,7 @@
   Plugin Script: plugz.php
   Plugin URI: http://www.plugz.co
   Description: Get Premium quality traffic with Plugz. Display related posts on your blog. Boost your site with new visitors or earn money with sponsored content.
-  Version: 1.5.2
+  Version: 1.5.3
   Author: Plugz.co Team
   Author URI: http://www.plugz.co
   Text Domain: plugzl18n
@@ -12,6 +12,7 @@
   License: GPL2
 
   === RELEASE NOTES ===
+  2015-06-18 - v1.5.3 - support added for Wordpress 4.2 (fixed major issue of posts disappearing when plugin was enabled)
   2014-12-08 - v1.5.2 - added user agent string on curl requests
   2014-12-03 - v1.5.1 - minor fixes
   2014-11-01 - v1.5 - affiliate support
@@ -40,10 +41,12 @@ define('PLUGZ_ADMIN_SETTINGS_PAGE', 'plugz');
 defined('APPLICATION_ENV') || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 
 if (APPLICATION_ENV == 'development') {
+    error_reporting(E_ALL);
+    ini_set('display_errors', 0);
     define('API_DOMAIN', 'www.plugz');
 } else {
     define('API_DOMAIN', 'www.plugz.co');
-    error_reporting(0);
+    error_reporting(E_ALL);
     @ini_set('display_errors', 0);
 }
 
@@ -109,6 +112,17 @@ if (is_admin()) {
     add_action('before_delete_post', 'plugz_delete_post');
 }
 
+function plugz_author_admin_init() {
+    /* Set plugin version data for use elsewhere in the plugin */
+    if (function_exists('get_plugin_data')) {
+        $_ENV['plugz_author_plugindata'] = get_plugin_data(PLUGZ_PLUGIN_DIR.'/plugz.php', false);
+    } else { // If the function get_plugin_data does not exist, return empty array
+        $_ENV['plugz_author_plugindata'] = array(
+            'Version' => ''
+        );
+    }
+}
+
 function plugz_do_this_every_half_minute() {
     $scheduledIndexing = get_option('plugz-start-index-schedule', 0);
     $limit = get_option('plugz-index-schedule-limit');
@@ -121,7 +135,7 @@ function plugz_do_this_every_half_minute() {
 }
 
 function plugz_is_service_up() {
-    if (function_exists('curl_init')) { 
+    if (function_exists('curl_init')) {
         $agent = "Mozilla/4.0 (compatible; MSIE 5.01; Windows NT 5.0)";
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, 'https://www.plugz.co');
@@ -130,10 +144,9 @@ function plugz_is_service_up() {
         curl_setopt($ch, CURLOPT_VERBOSE, false);
         curl_setopt($ch, CURLOPT_TIMEOUT, 5);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-        curl_setopt($ch, CURLOPT_SSLVERSION, 3);
+        curl_setopt($ch, CURLOPT_SSLVERSION, 0);
         curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
         $page = curl_exec($ch);
-        //echo curl_error($ch);
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
         if ($httpcode >= 200 && $httpcode < 300) {
@@ -141,6 +154,8 @@ function plugz_is_service_up() {
         } else {
             return false;
         }
+    } else {
+        return true;
     }
 }
 
@@ -178,7 +193,7 @@ function plugz_widget_shortcode($atts) {
     } else {
         $output = '';
     }
-    
+
     return $output;
 }
 
@@ -220,8 +235,6 @@ function plugz_insert_post_filter($content) {
                 }
             }
         }
-    } else {
-        $content = '';
     }
 
     return $content;
@@ -279,56 +292,56 @@ function plugz_box($post) {
 
     $plugz_post['categories'] = explode(',', $plugz_post['categories']);
     ?>
-                <?php if (!empty($plugz_post['message'])) { ?>
+    <?php if (!empty($plugz_post['message'])) { ?>
         <div style="padding-top:5px;" class="postbox">
             <div class="<?= $plugz_post['posted'] == 1 ? 'updated' : 'error'; ?>"><p>
                     <strong>Plugz:</strong> <?= $plugz_post['message']; ?>
                     <?php if (!empty($plugz_post['errors'])) { ?>
                     <ol>
-                    <?php foreach ($plugz_post['errors'] as $key => $error) { ?>
+                        <?php foreach ($plugz_post['errors'] as $key => $error) { ?>
                             <li><?= plugz_error($key, $error); ?></li>
-            <?php } ?>
+                        <?php } ?>
                     </ol>
-        <?php } ?>
+                <?php } ?>
                 </p></div>
         </div>
-        <?php } ?>
+    <?php } ?>
     <?php $thumb = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'full'); ?>
     <div class="categorydiv" id="pr_cats">
-    <?php if (!empty($categories)) { ?>
+        <?php if (!empty($categories)) { ?>
             <ul class="category-tabs" id="plugz-category-tabs">
                 <li class="tabs"><a tabindex="3" href="#plugz-category-all">Categories</a></li>
             </ul>                
             <div class="tabs-panel" id="pr_categories">
-                    <?php
-                    $selected = get_post_meta($post->ID, '_plugz_category', TRUE);
-                    ?>
+                <?php
+                $selected = get_post_meta($post->ID, '_plugz_category', TRUE);
+                ?>
                 <ul class="list:category categorychecklist form-no-clear" id="plugzcategorychecklist">
                     <?php foreach ($categories as $parent => $subcats) { ?>
-            <?php if (!is_numeric($parent)) : ?>
+                        <?php if (!is_numeric($parent)) : ?>
                             <li><input id="pr-category-<?= $parent; ?>" type="checkbox" name="_plugz_category[]"<?= is_array($plugz_post['categories']) && in_array($parent, $plugz_post['categories']) ? ' checked="checked"' : ''; ?> value="<?= $parent; ?>" /> <strong><?php echo $parent ?></strong></li>
-                                    <?php foreach ($subcats as $key => $val) { ?>
+                            <?php foreach ($subcats as $key => $val) { ?>
                                 <li id="plugz_category-<?= $key; ?>">
                                     <label>
                                         <input id="pr-category-<?= $val; ?>" type="checkbox" name="_plugz_category[]"<?= is_array($plugz_post['categories']) && in_array($val, $plugz_post['categories']) ? ' checked="checked"' : ''; ?> value="<?= $val; ?>" />
-                                <?= $val; ?>
+                                        <?= $val; ?>
                                     </label>
                                 </li>
-                <?php } ?>
-                                <?php else : ?>
+                            <?php } ?>
+                        <?php else : ?>
                             <li id="plugz_category-<?= $parent; ?>">
                                 <label>
                                     <input id="pr-category-<?= $parent; ?>" type="checkbox" name="_plugz_category[]"<?= is_array($plugz_post['categories']) && in_array($subcats, $plugz_post['categories']) ? ' checked="checked"' : ''; ?> value="<?= $subcats; ?>" />
-                            <?= $subcats; ?>
+                                    <?= $subcats; ?>
                                 </label>
                             </li>
-                <?php endif; ?>
-            <?php } ?>
+                        <?php endif; ?>
+                    <?php } ?>
                 </ul>
             </div>
-    <?php } else { ?>
+        <?php } else { ?>
             Error: Check your Plugz settings
-    <?php } ?>
+        <?php } ?>
     </div>
     <?php
 }
@@ -604,6 +617,7 @@ class Plugz_Widget extends WP_Widget {
         } elseif (isset($instance['widget_id'])) {
             $plugz = get_option('plugz-settings');
             $apiKey = get_option('plugz-api-key', '');
+
             if (!empty($plugz['user']) && !empty($apiKey)) {
                 $params = array('action' => 'getWidgetCode', 'id' => $instance['widget_id']);
                 $w = (array) plugz_request($params);
@@ -680,10 +694,10 @@ class Plugz_Widget extends WP_Widget {
                         $wdata = json_decode($row['wdata']);
                         ?>
                         <option value="<?= $row['id']; ?>"<?= $instance['widget_id'] == $row['id'] ? ' selected="selected"' : ''; ?>><?= $row['name']; ?> (<?= $wdata->widget_width; ?>px)</option>
-            <?php } ?>
+                    <?php } ?>
                 </select>
             </p>
-            <?php } elseif (isset($status['status']) && $status['status'] == '200') { ?>
+        <?php } elseif (isset($status['status']) && $status['status'] == '200') { ?>
             <p>No Plugz Widgets found. Go to <a href="admin.php?page=plugz/settings&open=dashboard&noheader=true" target="plugz">Plugz.co</a> and create some first.
             <?php } else { ?>
             <p>Unable to connect to Plugz API. Please check your <a href="admin.php?page=plugz/settings">Plugz settings</a>.
@@ -694,6 +708,7 @@ class Plugz_Widget extends WP_Widget {
     }
 
     add_action('widgets_init', create_function('', 'register_widget( "plugz_widget" );'));
+    add_action('admin_init', 'plugz_author_admin_init'); // Hook plugin admin initialization
 
     class Plugz {
 
