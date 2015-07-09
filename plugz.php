@@ -4,7 +4,7 @@
   Plugin Script: plugz.php
   Plugin URI: http://www.plugz.co
   Description: Get Premium quality traffic with Plugz. Display related posts on your blog. Boost your site with new visitors or earn money with sponsored content.
-  Version: 1.5.3
+  Version: 1.5.4
   Author: Plugz.co Team
   Author URI: http://www.plugz.co
   Text Domain: plugzl18n
@@ -12,6 +12,7 @@
   License: GPL2
 
   === RELEASE NOTES ===
+  2015-07-09 - v1.5.4 - api call bugfixes
   2015-06-18 - v1.5.3 - support added for Wordpress 4.2 (fixed major issue of posts disappearing when plugin was enabled)
   2014-12-08 - v1.5.2 - added user agent string on curl requests
   2014-12-03 - v1.5.1 - minor fixes
@@ -40,15 +41,9 @@
 define('PLUGZ_ADMIN_SETTINGS_PAGE', 'plugz');
 defined('APPLICATION_ENV') || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 
-if (APPLICATION_ENV == 'development') {
-    error_reporting(E_ALL);
-    ini_set('display_errors', 0);
-    define('API_DOMAIN', 'www.plugz');
-} else {
-    define('API_DOMAIN', 'www.plugz.co');
-    error_reporting(E_ALL);
-    @ini_set('display_errors', 0);
-}
+define('API_DOMAIN', 'www.plugz.co');
+error_reporting(E_ALL);
+@ini_set('display_errors', 0);
 
 // Plugin specific
 define('PLUGZ_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -115,7 +110,7 @@ if (is_admin()) {
 function plugz_author_admin_init() {
     /* Set plugin version data for use elsewhere in the plugin */
     if (function_exists('get_plugin_data')) {
-        $_ENV['plugz_author_plugindata'] = get_plugin_data(PLUGZ_PLUGIN_DIR.'/plugz.php', false);
+        $_ENV['plugz_author_plugindata'] = get_plugin_data(PLUGZ_PLUGIN_DIR . '/plugz.php', false);
     } else { // If the function get_plugin_data does not exist, return empty array
         $_ENV['plugz_author_plugindata'] = array(
             'Version' => ''
@@ -605,13 +600,17 @@ class Plugz_Widget extends WP_Widget {
      */
     public function widget($args, $instance) {
         extract($args);
+        
         if (isset($instance['title'])) {
             $title = apply_filters('widget_title', $instance['title']);
         }
+        
         echo $before_widget;
+        
         if (isset($title) && !empty($title)) {
             echo $before_title . $title . $after_title;
         }
+
         if (isset($instance['widget_code'])) {
             echo htmlspecialchars_decode($instance['widget_code']);
         } elseif (isset($instance['widget_id'])) {
@@ -619,16 +618,25 @@ class Plugz_Widget extends WP_Widget {
             $apiKey = get_option('plugz-api-key', '');
 
             if (!empty($plugz['user']) && !empty($apiKey)) {
-                $params = array('action' => 'getWidgetCode', 'id' => $instance['widget_id']);
-                $w = (array) plugz_request($params);
+                $plugz = get_option('plugz-settings');
 
-                if (!empty($w)) {
-                    $instance['widget_id'] = $w['id'];
-                    $instance['widget_code'] = $w['code'];
-                    echo htmlspecialchars_decode($instance['widget_code']);
+                if ($plugz['rating'] == 'nsfw') {
+                    echo '<script type="text/javascript" src="http://plug.plugerr.com/widget/' . base_convert($instance['id'], 10, 36) . '"></script>';
+                } elseif ($plugz['rating'] == 'mainstream') {
+                    echo '<script type="text/javascript" src="http://plug.plugs.co/widget/' . base_convert($instance['id'], 10, 36) . '"></script>';
+                } else {
+                    $params = array('action' => 'getWidgetCode', 'id' => $instance['widget_id']);
+                    $w = (array) plugz_request($params);
+
+                    if (!empty($w['id'])) {
+                        $instance['widget_id'] = $w['id'];
+                        $instance['widget_code'] = $w['code'];
+                        echo htmlspecialchars_decode($instance['widget_code']);
+                    }
                 }
             }
         }
+
         echo $after_widget;
     }
 
